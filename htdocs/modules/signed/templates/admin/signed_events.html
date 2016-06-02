@@ -1,0 +1,35 @@
+<!-- Starting of displaying administraion for XOOPS Self Signed -->
+<!-- author: Leshy Cipherhouse <leshy@slams.io> -->
+<{if $pagenav}>
+<div style="height: 43px;">
+	<div style="float: right; width: auto;">
+		<{$pagenav}>
+	</div>
+</div>
+<{/if}>
+<table id="events" class="events">
+	<tr class="head">
+		<td><{$smarty.const._SIGNED_AM_IDENTITY}></td>
+		<td><{$smarty.const._SIGNED_AM_SYSTEM}></td>
+		<td><{$smarty.const._SIGNED_AM_EVENT_TYPE}></td>
+		<td><{$smarty.const._SIGNED_AM_BEGAN}></td>
+		<td><{$smarty.const._SIGNED_AM_RANFORMS}></td>
+		<td><{$smarty.const._SIGNED_AM_USER}></td>
+		<td><{$smarty.const._SIGNED_AM_SIBBLINGS}></td>
+		<td><{$smarty.const._SIGNED_AM_COMMENT}></td>
+	</tr>
+	<{foreach item=event from=$events}>
+	<tr class="<{cycle values='odd,even'}>">
+		<td><{$event.eventid}></td>
+		<td><{$event.system}></td>
+		<td><{$event.type}></td>
+		<td><{$event.began}></td>
+		<td><{$event.micro}></td>
+		<td><{$event.user}></td>
+		<td><{$event.sibblings}></td>
+		<td><{$event.comment}></td>
+	</tr>
+	<{/foreach}>
+</table>
+<!-- Finishing of displaying administraion for XOOPS Self Signed -->
+<!-- XOOPS Signed version 1.11 -->

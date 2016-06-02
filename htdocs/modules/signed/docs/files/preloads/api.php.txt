@@ -1,0 +1,80 @@
+<?php
+/**
+ * System Preloads
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author          Cointin Maxime (AKA Kraven30)
+ * @author          Andricq Nicolas (AKA MusS)
+ * @version         $Id: core.php 8066 2011-11-06 05:09:33Z beckmi $
+ */
+
+defined('XOOPS_ROOT_PATH') or die('Restricted access');
+
+class SignedApiPreload extends XoopsPreloadItem
+{
+	
+	static $closed = true;
+   
+    function eventCoreIncludeCommonEnd($args)
+    {
+    	global $xoopsUser, $xoopsUserIsAdmin, $sess_handler;
+    	
+    	if (self::$closed != true)
+    		return self::$closed;
+    	
+    	if (!isset($_SESSION["signed"]['configurations']) || empty($_SESSION["signed"]['configurations']))
+    	{
+    		$module_handler = xoops_gethandler('module');
+    		$config_handler = xoops_gethandler('config');
+    		$_SESSION["signed"]['module'] = $module_handler->getByDirname('signed');
+    		if (is_object($_SESSION["signed"]['module']))
+    			$_SESSION["signed"]['configurations'] = $config_handler->getConfigList($_SESSION["signed"]['module']->getVar('mid'));
+    		else
+    			return self::$closed = false;
+    	}
+    	
+    	if (defined('_SIGNED_EVENT_SYSTEM') && constant('_SIGNED_EVENT_SYSTEM') == 'api' && !is_object($GLOBALS['xoopsUser']))
+    	{
+    		$member_handler = xoops_gethandler('member');
+    		$criteria = new CriteriaCompo(new Criteria('uname', $_SESSION["signed"]['configurations']['api_user']));
+    		$xoopsUsers =& $member_handler->getUsers($criteria, false, false);
+    		if (count($xoopsUsers)==1)
+    		{
+    			$xoopsUser = $xoopsUsers[0];
+    			if ((intval($xoopsUser->getVar('last_login')) + 60 * 5) < time()) {
+    				$sql = "UPDATE " . $xoopsDB->prefix('users')
+    				. " SET last_login = '" . time()
+    				. "' WHERE uid = " . $_SESSION["signed"]['xoopsUserId'];
+    				@$xoopsDB->queryF($sql);
+    			}
+    			$sess_handler->update_cookie();
+    			if (isset($_SESSION["signed"]['xoopsUserGroups'])) {
+    				$xoopsUser->setGroups($_SESSION["signed"]['xoopsUserGroups']);
+    			} else {
+    				$_SESSION["signed"]['xoopsUserGroups'] = $xoopsUser->getGroups();
+    			}
+    			$xoopsUserIsAdmin = $xoopsUser->isAdmin();
+    		}
+    	} 
+    	elseif ((!defined('_SIGNED_EVENT_SYSTEM') || constant('_SIGNED_EVENT_SYSTEM') != 'api') && is_object($GLOBALS['xoopsUser']))
+    	{
+    		if ($_SESSION["signed"]['configurations']['api_user'] == $GLOBALS['xoopsUser']->getVar('uname') && !$GLOBALS['xoopsUser']->isAdmin())
+    		{
+    			$xoopsUser = '';
+    			$_SESSION["signed"] = array();
+    			session_destroy();
+    			setcookie($xoopsConfig['usercookie'], 0, - 1, '/');
+    		}
+    	}
+    }
+}
+
+?>

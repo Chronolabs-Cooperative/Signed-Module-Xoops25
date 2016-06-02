@@ -1,0 +1,75 @@
+<?php
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		administration
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+		
+	
+	$path = dirname(dirname(dirname(dirname(__FILE__))));
+	include_once $path . '/mainfile.php';
+	include_once $path . '/include/cp_functions.php';
+	require_once $path . '/include/cp_header.php';
+	require_once dirname(__DIR__) . '/include/constants.php';
+	
+	global $xoopsModule;	
+	$thisModuleDir = $GLOBALS['xoopsModule']->getVar('dirname');
+
+	// Load language files
+	xoops_loadLanguage('admin', $thisModuleDir);
+	xoops_loadLanguage('modinfo', $thisModuleDir);
+	xoops_loadLanguage('main', $thisModuleDir);
+	
+	xoops_load('pagenav');
+	
+	$pathIcon16 = '../'.$xoopsModule->getInfo('icons16');
+	$pathIcon32 = '../'.$xoopsModule->getInfo('icons32');
+	$pathModuleAdmin = $xoopsModule->getInfo('dirmoduleadmin');
+	
+	include_once $GLOBALS['xoops']->path($pathModuleAdmin.'/moduleadmin.php');
+	
+	if ($xoopsUser) {
+	    $moduleperm_handler =& xoops_gethandler('groupperm');
+	    if (!$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
+	        redirect_header(XOOPS_URL, 1, _NOPERM);
+	        exit();
+	    }
+	} else {
+	    redirect_header(XOOPS_URL . "/user.php", 1, _NOPERM);
+	    exit();
+	}
+	
+	if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
+	  include_once(XOOPS_ROOT_PATH."/class/template.php");
+	  $xoopsTpl = new XoopsTpl();
+	}
+	
+	if (!isset($GLOBALS['xoopsTpl']) || !is_object($GLOBALS['xoopsTpl'])) {
+	    include_once XOOPS_ROOT_PATH . '/class/template.php';
+	    $GLOBALS['xoopsTpl'] = new XoopsTpl();
+	}
+?>

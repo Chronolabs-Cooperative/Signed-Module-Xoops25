@@ -1,0 +1,101 @@
+<?php 
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		templates
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+?><?php 
+	
+	if (!defined('_SIGNATURE_MODE'))
+		die('_ERROR_NO_SIGNATURE_MODE_DEFINED');
+	
+	$GLOBALS['io'] = signedStorage::getInstance(_SIGNED_RESOURCES_STORAGE);
+	$verification = $GLOBALS['io']->load(_PATH_REPO_VALIDATION, $_SESSION["signed"]['serial']);
+	if ($verification['verification']['expired'] == true) {
+		
+		/**
+		 * Prompting Sessioning
+		 */
+		if (!isset($_SESSION["signed"]['prompts'])) {
+			foreach(returnKeyed(_SIGNATURE_MODE, 'signed_getPromptsArray') as $key => $prompt) {
+				if ($key == 'fields-identification-identification-form') {
+					$prompt['type'] = 'update';
+					$_SESSION["signed"]['prompts']['update-identification-identification-form'] = $prompt;
+				} elseif ($prompt['class']=='finished') {
+					$prompt['class']=='finished-update';
+					$prompt['for'] = 'identification';
+					$_SESSION["signed"]['prompts']['help-'.$prompt['for'].'-'.$prompt['class']] = $prompt;
+				}
+			}
+		}
+		$promptskeys = array_keys($_SESSION["signed"]['prompts']);
+		if (!isset($_SESSION["signed"]['prompt']))
+			$_SESSION["signed"]['prompt'] = 'update-identification-identification-form';
+		if (!isset($_SESSION["signed"]['stepstogo']))
+			$_SESSION["signed"]['stepstogo'] = array($_SESSION["signed"]['key']);
+	
+		/**
+		 * Inbound Data
+		 */
+		if (strtoupper($_SERVER["REQUEST_METHOD"])=="POST") {
+			if (signed_goVerifyAndPackagePrompt($_SESSION["signed"]['prompt'], $_REQUEST['step'])) {
+				if (count(signed_getStepsLeftPrompt($_SESSION["signed"]['prompt'], $_REQUEST['step']))==0) {
+					if ($GLOBALS['io'] = signedStorage::getInstance(_SIGNED_RESOURCES_STORAGE)) { 
+						$array = $GLOBALS['io']->load(_PATH_REPO_SIGNATURES, $_SESSION["signed"]['serial']);
+						$resources['resources']['signature']['identifications'][$_REQUEST['step']] = $_SESSION["signed"]['package']['identifications'][$_REQUEST['step']];
+						$GLOBALS['io']->save($resources, _PATH_REPO_SIGNATURES, $_SESSION["signed"]['serial']);
+						
+						$GLOBALS['io'] = signedStorage::getInstance(_SIGNED_RESOURCES_STORAGE);
+						$verification = $GLOBALS['io']->load(_PATH_REPO_VALIDATION, $_SESSION["signed"]['serial']);
+						
+						$verification = XML2Array::createArray(signedArrays::getFileContents(_PATH_REPO_VALIDATION . _DS_ . $_SESSION["signed"]['serial'] . '.xml'));
+						$verification['verification']['expired'] == false;
+						$GLOBALS['io']->save($verification, _PATH_REPO_VALIDATION, $_SESSION["signed"]['serial']);
+						
+						signed_lodgeCallbackSessions($_SESSION["signed"]['serial'], 'update');
+						
+						$_SESSION["signed"]['prompt'] = 'help-identification-finished-update';
+						$GLOBALS['url'] = _URL_ROOT . '/=updator=/?op=finished&serial='.$_SESSION["signed"]['serial'];
+						?>
+<p style="font-size: 2.345em; font-weight:bold; text-align: center; margin-bottom: 19px;"><?php echo _CONTENT_COMMON_UPDATE_P1; ?></p>
+<p style="font-size: 1.345em; font-weight:bold; text-align: center;"><?php sprintf(_CONTENT_COMMON_UPDATE_P2, _URL_IMAGES, $GLOBALS['url']); ?>"></p>
+						<?php 
+						$nobuffer = true;
+					}
+				}
+			}
+		}
+		
+		/**
+		 * Buffer Templates to output buffer
+		 */
+		if (!isset($nobuffer))
+			signed_goBufferPrompt($_SESSION["signed"]['prompt'], signed_getNextStepInPrompt($_SESSION["signed"]['prompt'], $_SESSION["signed"]['stepstogo']));
+	} else {
+		$GLOBALS['errors']['not-expired'] = "The Identification you are trying to edit has not or is not on an expired digital signature!";
+	}	
+?>

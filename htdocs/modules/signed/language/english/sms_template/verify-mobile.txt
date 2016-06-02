@@ -1,0 +1,10 @@
+To {TO_NUMBER},
+
+The person/individual {PERSON_FOR} has asked us {PERSON_BY} to create a digital signature for them. This mobile number was provided and needs to be verified!
+
+To verify click on this URL to generate the Digital Signature: {VERIFY_URL}
+
+Many thanks,
+
+{SITE_COMPANY}
+{SITE_URL}	

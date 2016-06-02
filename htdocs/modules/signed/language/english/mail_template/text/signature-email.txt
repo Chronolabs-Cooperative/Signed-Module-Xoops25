@@ -1,0 +1,16 @@
+To {PERSON_FOR},
+
+Recently you requested a Digital signature, it is assigned and attached to this email; the two files attached is one is your RAW Signature file which can be used with sites that require it the other is your Digital Signature Certificate which is also below some sites may require this as well or seperately.
+
+You have a short hand Digital Signature code which you can also use for sites requesting the Digital Signature code, yours is:~ {SIGNED_CODE}
+
+Your Digital Signature Certificate is as follows:
+
+{SIGNED_CERTIFICATE}
+
+Your Digital Signature's expire:~ {SIGNED_EXPIRED}
+
+Many thanks,
+
+{SITE_COMPANY}
+{SITE_URL}	

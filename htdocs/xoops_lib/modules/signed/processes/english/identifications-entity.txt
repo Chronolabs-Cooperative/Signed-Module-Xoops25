@@ -1,0 +1,51 @@
+##
+## Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+##
+## You may not change or alter any portion of this comment or credits
+## of supporting developers from this source code or any supporting source code
+## which is considered copyrighted (c) material of the original comment or credit authors.
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+##
+## @filesource
+## @copyright       	Chronolabs Cooperative http://labs.coop
+## @license         	General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+## @license		End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+## @license		Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+## @license		General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+## @category		signed
+## @since           	2.1.9
+## @version		2.2.0
+## @author          	Simon Antony Roberts <wishcraft@users.sourceforge.net>
+## @author          	Australian Passport: M8747409 <faultticket@gmail.com>
+## @ingroup		module
+## @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+## @link		Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+## @link		Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+## @link		XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+## @see			Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+##
+## ::[ DATA START ]::
+First Page of National Police Record|80:id-national-police-record|image,serial-number,issue-country
+Drivers Licence|55:id-drivers-licence|image,serial-number,expiry-month,expiry-year,issue-country
+Proof of Age|50:id-proof-age|image,serial-number,expiry-month,expiry-year,issue-country
+Passport|45:id-passport|image,serial-number,expiry-month,expiry-year,issue-country
+Birth Certificate|45:id-birth-certificate|image,serial-number,issue-country
+Birth Card|45:id-birth-card|image,serial-number,expiry-month,expiry-year,issue-country
+Marriage Certificate|35:id-marriage-certificate|image,serial-number,issue-country
+Builders/Trade Licence|15:id-trade-licence|image,serial-number,expiry-month,expiry-year,issue-country
+Working Permit Card (ie. Green-card)|15:id-work-permit|image,serial-number,expiry-month,expiry-year,issue-country
+Health Services Card (ie. Medicare)|15:id-health-card|image,serial-number,expiry-month,expiry-year,issue-country
+Detailed Invoice/Bank Statement|10:id-detailed-statement|image,serial-number,expiry-month,expiry-year,issue-country
+Financial Debit Card|20:id-debit-card|image,serial-number,expiry-month,expiry-year,issue-country
+Financial Credit Card|20:id-credit-card|image,serial-number,expiry-month,expiry-year,issue-country
+Social Services Card|25:id-social-services-card|image,serial-number,expiry-month,expiry-year,issue-country
+Government Pension Card|25:id-gov-pension-card|image,serial-number,expiry-month,expiry-year,issue-country
+State Police Identification Badge|40:id-police-badge|image,serial-number,issue-country
+State Fire Identification Badge|40:id-fire-badge|image,serial-number,issue-country
+State Health Identification Badge|30:id-health-badge|image,serial-number,issue-country
+Government Employment Certificate|35:id-gov-employ-certificate|image,serial-number,issue-country
+Current Employment Certificate/Letter|25:id-current-employ-certificate|image,serial-number,issue-country
+## ::[ DATA END ]::
+## SEALED BY: Simon Antony Roberts (M8747409) - 14 Aug 2015 2200 AEST

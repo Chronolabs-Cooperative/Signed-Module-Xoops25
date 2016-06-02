@@ -1,0 +1,81 @@
+##
+## Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+##
+## You may not change or alter any portion of this comment or credits
+## of supporting developers from this source code or any supporting source code
+## which is considered copyrighted (c) material of the original comment or credit authors.
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+##
+## @filesource
+## @copyright       	Chronolabs Cooperative http://labs.coop
+## @license         	General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+## @license		End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+## @license		Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+## @license		General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+## @category		signed
+## @since           	2.1.9
+## @version		2.2.0
+## @author          	Simon Antony Roberts <wishcraft@users.sourceforge.net>
+## @author          	Australian Passport: M8747409 <faultticket@gmail.com>
+## @ingroup		module
+## @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+## @link		Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+## @link		Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+## @link		XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+## @see			Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+##
+## ::[ DATA START ]::
+entity-logo|This is the business or government entity's logo as an image file (GIF, JPG, PNG, BMP)
+entity-rbn|This is the business or government entity's registration number
+entity-dor|This is the business or government entity's date of registration
+entity-name|This is the business or government entity's Full Name
+entity-department|This is the business or government entity's department
+entity-address|This is the business or government entity's street address
+entity-suburb|This is the business or government entity's suburb
+entity-state|This is the business or government entity's state/province
+entity-postcode|This is the business or government entity's postcode/ZIP Code
+entity-country|This is the business or government entity's country
+entity-email|This is your business or government entity email address [maybe verified] 
+entity-manager-email|This is your business or government entity's manager's email address [maybe verified] 
+entity-accountant-email|This is your business or government entity's accountant's email address
+entity-paypal-email|This is your business or government entity's PayPal email address
+entity-phone|This is your business or government entity's main switch phone number<br/>(Include Country code ~ without plus ie. Australia = 61)
+entity-fax|This is your business or government entity's departments fax number<br/>(Include Country code ~ without plus ie. Australia = 61)
+entity-mobile|This is your business or government entity's mobile number [maybe verified]<br/>(Include Country code ~ without plus ie. Australia = 61)
+entity-twitter|This is your business or government entity's full twitter profile URL
+entity-facebook|This is your business or government entity's full URL for it's Facebook Page/Group
+entity-linkedin|This is your business or government entity's full URL for it's Linked-in Group
+entity-googleplus|This is your business or government entity's full URL for it's Google+ Page
+entity-youtube|This is your business or government entity's full URL for it's YouTube Channel
+entity-blog|This is your business or government entity's full URL for it's Journal/Blog URL
+photo|A recent clear image of yourself (GIF, JPG, PNG, BMP)
+name|Your own full name
+address|Your own home street address
+suburb|Your own home suburb
+state|Your own home state/province
+postcode|Your own home postcode/ZIP Code
+country|Your own home country
+gender|Your own sex type/gender
+dob|Your personal date of birth
+email|Your own private email address [maybe verified]
+paypal-email|Your own private PayPal email address
+im-type|Your own Instant Messaging Type
+im-address|Your own Instant Messaging Address
+phone|Your own home phone number<br/>(Include Country code ~ without plus ie. Australia = 61)
+fax|Your own home fax number<br/>(Include Country code ~ without plus ie. Australia = 61)
+mobile|Your personal mobile number [maybe verified]<br/>(Include Country code ~ without plus ie. Australia = 61)
+twitter|Your own personal full URL for your Twitter Profile
+facebook|Your own personal full URL for your Facebook Profile
+linkedin|Your own personal full URL for your Linked-in Profile
+googleplus|Your own personal full URL for your Google+ Profile
+youtube|Your own personal full URL for your YouTube Channel
+blog|Your own personal full URL for your Personal Blog
+image|The image you wish to attach and embed for this identification (JPG, PNG, GIF, BMP)
+serial-number|The identifications number
+expiry-month|The month the identification expires
+expiry-year|The year the identification expires
+issue-country|The country of issue for the identification
+## ::[ DATA END ]::
+## SEALED BY: Simon Antony Roberts (M8747409) - 14 Aug 2015 2205 AEST

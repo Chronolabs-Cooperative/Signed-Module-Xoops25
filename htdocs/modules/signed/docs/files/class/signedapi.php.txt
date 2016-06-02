@@ -1,0 +1,510 @@
+<?php
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		class
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+
+
+defined('_PATH_ROOT') or die('Restricted access');
+/**
+ * 
+ */
+include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'signedobject.php';
+include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'signedprocesses.php';
+
+/**
+ * 
+ * @author Simon Roberts <simon@labs.coop>
+ *
+ */
+class signedAPI extends signedObject
+{
+
+	/**
+	 *
+	 * @var unknown
+	 */
+	var $_processes = NULL;
+	
+	/**
+	 *
+	 * @var unknown
+	 */
+	var $_format = 'json';
+
+	/**
+	 *
+	 * @var unknown
+	 */
+	var $_headers_sent = false;
+	
+	/**
+	 *
+	 * @var unknown
+	 */
+	var $_mimetype = array();
+
+	/**
+	 *
+	 * @var unknown
+	 */
+	var $_calls = array();
+	
+	/**
+	 * 
+	 * @param string $format
+	 */
+	function __construct($format='json')
+	{
+		
+		$this->_processes = signedProcesses::getInstance();
+		$this->_format = $format;
+		$this->_mimetype = array('json' => 'application/json', 'serial' => 'text/html', 'xml' => 'text/xml');
+		$this->_parsers = array('json'=>'parseJSON', 'xml'=>'parseXML', 'serial'=>'parseSerialisation');
+
+		// Supported API Calls
+		$this->_calls = $this->_processes->getAPICalls();
+		foreach($this->_calls as $key => $function) {
+			if (defined("_SIGNED_API_FUNCTION_".strtoupper($function)))
+				if (constant("_SIGNED_API_FUNCTION_".strtoupper($function))!=true)
+					unset($this->_calls[$key]);
+		}
+	
+	}
+	
+	static function getInstance($format = 'json')
+	{
+		ini_set('display_errors', true);
+		error_reporting(E_ERROR);
+		
+		static $object = array();
+		if (!isset($object[$format]))
+			$object[$format] = new signedAPI($format);
+		$object[$format]->intialise();
+		return $object[$format];
+	}
+
+	/**
+	 *
+	 * @param string $path
+	 * @param string $filetitle
+	 * @return multitype:
+	 */
+	function callKeys()
+	{
+		return array_keys($this->_calls);
+	}
+	
+	/**
+	 *
+	 * @param string $path
+	 * @param string $filetitle
+	 * @return multitype:
+	 */
+	function format($data = array(), $format = '')
+	{
+		if (empty($format))
+			$format = $this->_format;
+		if (!$this->_headers_sent)
+			$this->_headers_sent = $this->sendHeader($format);
+		$data = $this->parse($data, $format);
+		if ($this->_logger = signedLogger::getInstance())
+			$this->_logger->logBytes(strlen($data), 'api-'.$format);
+		return $data;
+	}
+
+
+	/**
+	 *
+	 * @param string $filename
+	 * @return boolean|string
+	 */
+	private function sendHeader($format = '')
+	{
+		if (empty($format))
+			$format = $this->_format;
+		/**
+		 * Set Contextual Data
+		 */
+		if (constant("_SIGNED_DISCOVERABLE")==true) {
+			header('Signed-API-Version: ' . _SIGNED_API_VERSION);
+			header('Signed-API-Functions: ' . implode(',', array_keys($this->_calls)));
+			foreach($this->_calls as $key => $call) {
+				header('Signed-Function-Path-'.ucfirst(strtolower($key)). ': ' . $call);
+			}
+		}
+		if (isset($this->_mimetype[$format]))
+			header('Content-type: ' . $this->_mimetype[$format]);
+		return true;
+	}
+	
+	/**
+	 *
+	 */
+	private function modifyNumericKeys($array = '', $convert = false)
+	{
+		if (!$convert) {
+			$changed = false;
+			$values = array();
+			foreach(array_reverse(array_keys($array)) as $key)
+			{
+				if (is_numeric($key))
+				{
+					$changed = true;
+					$newkey = $this->_arrays->makeAlphaCount($key);
+					if (is_array($values[$key]))
+						$values[$newkey] = $this->modifyNumericKeys($array[$key], $convert);
+					else
+						$values[$newkey] = $array[$key];
+					unset($array[$key]);
+				}
+			}
+			if ($changed == true) {
+				foreach(array_reverse(array_keys($values)) as $key)
+				{
+					$array[$key] = $values[$key];
+				}
+			}
+		} else {
+			$changed = false;
+			$values = array();
+			foreach(array_reverse(array_keys($array)) as $key)
+			{
+				if (substr($key, 0, strlen($spatial)) == $spatial && substr($key, strlen($key) - strlen($spatial), strlen($spatial)) == $spatial )
+				{
+					$changed = true;
+					$newkey = $this->_arrays->reverseAlphaCount($key);
+					if (is_array($values[$key]))
+						$values[$newkey] = $this->modifyNumericKeys($array[$key], $convert);
+					else
+						$values[$newkey] = $array[$key];
+					unset($array[$key]);
+				}
+			}
+			if ($changed == true) {
+				foreach(array_reverse(array_keys($values)) as $key)
+				{
+					$array[$key] = $values[$key];
+				}
+			}
+		}
+		return $array;
+	}
+	
+	/**
+	 *
+	 * @param string $filename
+	 * @return boolean|string
+	 */
+	private function parse($array = array(), $format = '')
+	{
+		if (empty($format)||!in_array($format, $this->_parsers))
+			$format = $this->_format;
+		$function = $this->_parsers[$format];
+		return $this->$function($array);
+	}
+	
+	/**
+	 * 
+	 * @param string $mixed
+	 * @param string $action
+	 * @return string|mixed|boolean
+	 */
+	private function parseJSON($mixed = '', $action = '')
+	{
+		if (empty($action)) 
+		{
+			if (is_array($mixed))
+				$action = 'pack';
+			else 
+				$action = 'unpack';
+		}
+		switch ($action)
+		{
+			case "pack":
+				return json_encode($mixed);
+				break;
+			case "unpack":
+				return json_decode($mixed, true);
+				break;
+		}
+		return false;
+	}
+	
+
+	/**
+	 *
+	 * @param string $mixed
+	 * @param string $action
+	 * @return string|mixed|boolean
+	 */
+	private function parseXML($mixed = '', $action = '')
+	{
+		if (empty($action))
+		{
+			if (is_array($mixed))
+				$action = 'pack';
+			else
+				$action = 'unpack';
+		}
+		switch ($action)
+		{
+			case "pack":
+				$dom = new XmlDomConstruct('1.0', 'utf-8');
+				$dom->fromMixed($this->modifyNumericKeys($array, false));
+				return $dom->saveXML();
+				break;
+			case "unpack":
+				return $this->modifyNumericKeys(XML2Array::createArray($mixed), true);
+				break;
+		}
+		return false;
+	}
+	
+
+	/**
+	 *
+	 * @param string $mixed
+	 * @param string $action
+	 * @return string|mixed|boolean
+	 */
+	private function parseSerialisation($mixed = '', $action = '')
+	{
+		if (empty($action))
+		{
+			if (is_array($mixed))
+				$action = 'pack';
+			else
+				$action = 'unpack';
+		}
+		switch ($action)
+		{
+			case "pack":
+				return serialize($mixed);
+				break;
+			case "unpack":
+				return unserialize($mixed);
+				break;
+		}
+		return false;
+	}
+	
+	/**
+	 *
+	 */
+	function getSignature($serial = '', $code = '', $certificate = '', $name = '', $email = '', $date = '', $needsverified = false)
+	{
+		static $resources = array();
+		$this->_io = signedStorage::getInstance(_SIGNED_RESOURCES_STORAGE);
+		$dossier = array('serial', 'code', 'certificate');
+		foreach($dossier as $field) {
+			if (empty($resources[$field])) {
+				$pointers = array();
+				switch($field)
+				{
+					case 'serial':
+						if ($this->_io->file_exists(_PATH_REPO_SIGNATURES, $filetitle = $serial)) {
+							$array = $this->_io->load(_PATH_REPO_SIGNATURES, $filetitle);
+							$resources[$field] = $array['resources'];
+						}
+						break;
+					case 'code':
+						if ($this->_io->file_exists(_PATH_PATHWAYS_CODES, $filetitle = md5($code))) {
+							$pointers = $this->_io->load(_PATH_PATHWAYS_CODES, $filetitle);
+						}
+						if ($this->_io->file_exists(_PATH_REPO_SIGNATURES, $filetitle = $pointers['pathway']['serial-number'])) {
+							$array = $this->_io->load(_PATH_REPO_SIGNATURES, $filetitle);
+							$resources[$field] = $array['resources'];
+						}
+						break;
+					case 'certificate':
+						if ($this->_io->file_exists(_PATH_PATHWAYS_CERTIFICATES, $filetitle = md5(implode("", signed_trimExplode(explode("\n", $certificate)))))) {
+							$pointers = $this->_io->load(_PATH_PATHWAYS_CERTIFICATES, $filetitle);
+						}
+						if ($this->_io->file_exists(_PATH_REPO_SIGNATURES, $filetitle = $pointers['pathway']['serial-number'])) {
+							$array = $this->_io->load(_PATH_REPO_SIGNATURES, $filetitle);
+							$resources[$field] = $array['resources'];
+						}
+						break;
+				}
+			}
+		}
+	
+		$classone = 0;
+		foreach($resources as $field => $resource) {
+			foreach($resources as $fieldb => $resourceb) {
+				if ($resource['serial-number']!=$resourceb['serial-number']) {
+					$pass=false;
+				} else {
+					$classone++;
+					$ret = $resource;
+				}
+			}
+		}
+	
+		$twokeys = array();
+		if (!empty($name))
+			$twokeys['names'] = sha1(strtolower($name));
+		if (!empty($email))
+			$twokeys['emails'] = sha1(strtolower($email));
+		if (!empty($date))
+			$twokeys['dates'] = sha1(date("Y-m-d",strtotime($date)));
+		$dossier = array(	'emails' 	=> constant("_PATH_PATHWAYS_EMAILS"),
+				'names' 	=> constant("_PATH_PATHWAYS_NAMES"),
+				'dates' 	=> constant("_PATH_PATHWAYS_DATES"));
+		$classtwo = 0;
+		foreach($dossier as $field => $path) {
+			if (!empty($twokeys[$field])) {
+				$array = $this->_io->load($path, $twokeys[$field]);
+				if (in_array($ret['serial-number'], array_keys($array))) {
+					$classtwo++;
+				}
+			}
+		}
+	
+		$pass = false;
+		if ($classone>=2||($classone>=1&&$classtwo>=1))
+			$pass = true;
+	
+		if ($this->_io->file_exists(_PATH_REPO_VALIDATION, $filetitle =  $ret['serial-number'])) {
+			$verifier = $this->_io->load(_PATH_REPO_VALIDATION, $filetitle);
+		}
+		if (isset($verifier) && is_array($verifier)) {
+			if ($needsverified==true && $pass==true) {
+				if (!isset($verifier['verification']['verified'])||$verifier['verification']['verified']==false) {
+					if (function_exists('http_response_code'))
+						http_response_code(400);
+					echo json_encode(array('success'=> false, 'error'=> 'The signature is unverified still and doesn\'t allow for Digital Ensignment to occur!', 'error-code' => '105'));
+					exit(0);
+				}
+			}
+			if (isset($verifier['verification']['expired'])&&$verifier['verification']['expired']!=false) {
+				if (function_exists('http_response_code'))
+					http_response_code(400);
+				echo json_encode(array('success'=> false, 'error'=> 'The signature has expired and doesn\'t allow for Digital Ensignment to occur!', 'error-code' => '106'));
+				exit(0);
+			}
+		}
+		return ($pass==true?$ret:false);
+	}
+	
+
+	/**
+	 *
+	 */
+	function verifyAPIFields($type = 'sign', $data = array())
+	{
+		switch ($type) {
+			case 'sign':
+	
+				$required = array('docid', 'doctitle');
+				$twoneeded = array('serial-number', 'code', 'certificate');
+				$callbackneeded = array('callback-url', 'signature-package-field', 'doc-identity-field', 'signature-updated-field', 'signature-expiry-field');
+	
+				$failed = false;
+				$missing = array();
+				foreach($required as $field) {
+					if (!in_array($field, $data)) {
+						$missing[$field] = $field;
+						$failed = true;
+					}
+				}
+	
+				if ($failed == true)
+				{
+					if (function_exists('http_response_code'))
+						http_response_code(400);
+					echo json_encode(array('success'=> false, 'error'=> 'Required Fields: '.implode(', ', $missing) . ' - are missing from the field name or are empty!', 'error-code' => '100'));
+					exit(0);
+				}
+	
+				$found = 0;
+				$missing = array();
+				$having = array();
+				foreach($twoneeded as $field) {
+					if (!in_array($field, $data)) {
+						$missing[$field] = $field;
+					} else {
+						$having[$field] = $field;
+						$found++;
+					}
+				}
+	
+				if ($found < 2)
+				{
+					if (function_exists('http_response_code'))
+						http_response_code(400);
+					echo json_encode(array('success'=> false, 'error'=> 'You have the field(s):  '.implode(', ', $having) . ' but are still requiring at least one more of the field(s): '.implode(', ', $missing) . '!', 'error-code' => '101'));
+					exit(0);
+				}
+	
+	
+				$found = 0;
+				$missing = array();
+				$having = array();
+				foreach($callbackneeded as $field) {
+					if (!in_array($field, $data)) {
+						$missing[$field] = $field;
+					} else {
+						$having[$field] = $field;
+						$found++;
+					}
+				}
+	
+				if ($found < count($callbackneeded) && $found > 0)
+				{
+					if (function_exists('http_response_code'))
+						http_response_code(400);
+					echo json_encode(array('success'=> false, 'error'=> 'If you wish to use a call back you have the field(s):  '.implode(', ', $having) . ' but are still needing to specify all of the following field(s): '.implode(', ', $missing) . '!', 'error-code' => '102'));
+					exit(0);
+				}
+				break;
+			case "verify":
+				$required = array('docid', 'verification-key');
+	
+				$failed = false;
+				$missing = array();
+				foreach($required as $field) {
+					if (!in_array($field, $data)) {
+						$missing[$field] = $field;
+						$failed = true;
+					}
+				}
+	
+				if ($failed == true)
+				{
+					if (function_exists('http_response_code'))
+						http_response_code(400);
+					echo json_encode(array('success'=> false, 'error'=> 'Required Fields: '.implode(', ', $missing) . ' - are missing from the field name or are empty!', 'error-code' => '100'));
+					exit(0);
+				}
+				break;
+		}
+		return true;
+	}
+}

@@ -1,0 +1,14 @@
+To {PERSON_FOR},
+
+Your Digital signature with the serial number of {SERIAL_NUMBER} has been flag recently by a signer with fields that need to be update these are:~
+
+{REQUEST_TEXT}
+
+In this case your signature is {EXPIRY_STATE} ~ due to this request for information or data updating.
+
+If you wish to update these fields now then please click on this link: {EDIT_URL}
+
+Many thanks,
+
+{SITE_COMPANY}
+{SITE_URL}	

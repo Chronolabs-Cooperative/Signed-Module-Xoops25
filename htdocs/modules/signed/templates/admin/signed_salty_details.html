@@ -1,0 +1,36 @@
+<h1><{$smarty.const._SIGNED_AM_FORM_SALPHA_H1}></h1>
+<p><{$smarty.const._SIGNED_AM_FORM_SALPHA_P1}></p>
+<{$salpha.javascript}>
+<form name="<{$salpha.name}>" id="<{$salpha.name}>" action="<{$salpha.action}>" method="<{$salpha.method}>" <{$salpha.extra}> >
+    <table class='outer txtcenter width100'>
+        <tr>
+            <td class='head width30 txtright'><{$smarty.const._SIGNED_AM_FORM_EMAIL}></td>
+            <td class='even txtleft'><{$salpha.elements.email.body}></td>
+        </tr>
+        <tr>
+            <td class='head width30 txtright'><{$smarty.const._SIGNED_AM_FORM_NAME}></td>
+            <td class='even txtleft'><{$salpha.elements.name.body}></td>
+        </tr>
+        <tr>
+            <td class='head width30 txtright'><{$smarty.const._SIGNED_AM_FORM_URL}></td>
+            <td class='even txtleft'><{$salpha.elements.url.body}></td>
+        </tr>
+        <tr>
+            <td class='head width30 txtright'><{$smarty.const._SIGNED_AM_FORM_PIN}></td>
+            <td class='even txtleft'><{$salpha.elements.pin.body}></td>
+        </tr>                       
+        <tr>
+            <td class='head'>&nbsp;</td>
+            <td class='even'>
+                <{foreach item=element from=$salpha.elements}>
+                    <{if $element.hidden == 1}>
+                        <{$element.body}>
+                    <{/if}>
+                <{/foreach}>
+                <{$salpha.elements.submit.body}>
+            </td>
+        </tr>
+    </table>
+</form>
+<h2><{$smarty.const._SIGNED_AM_FORM_SALPHA_H2}></h2>
+<p><{$smarty.const._SIGNED_AM_FORM_SALPHA_P2}></p>

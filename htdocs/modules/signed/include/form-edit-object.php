@@ -1,0 +1,370 @@
+<?php
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		module
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+
+require_once _PATH_ROOT . _DS_ . 'class' . _DS_ . 'signedformloader.php';
+require_once _PATH_ROOT . _DS_ . 'class' . _DS_ . 'wideimage' . _DS_ . 'WideImage.php';
+
+if (!class_exists('signed_form_edit_object')) 
+{
+
+	class signed_form_edit_object
+	{
+
+		function getForm($mode = '', $form = '', $name = '', $title = '', $action = '', $summary = '', $package = array()) 
+		{
+
+			signedCanvas::getInstance()->addScript(_URL_JS. '/json.validation.js', '', 'json.validation.js');
+			signedCanvas::getInstance()->addScript( '', 'function ValidateLengthOperations(form) {
+	var params = new Array();
+	$.getJSON("'._URL_ROOT.'/=dojsonoperations=/?" + $(\'#\'+form).serialize(), params, refreshform);
+}', 'ValidateLengthOperations', array( 'type' => 'text/javascript' ) );
+
+			$fields = returnKeyed($mode, 'signed_getFieldsArray');
+			switch($mode) {
+				case 'identification':
+					$identifications = returnKeyed(_SIGNATURE_MODE, 'signed_getIdentificationsArray');
+					if (count($identifications[$_SESSION["signed"]['step']]['fields'])>0) {
+						foreach(array_keys($fields) as $key) {
+							if (!in_array($key, $identifications[$_SESSION["signed"]['step']]['fields'])) {
+								unset($fields[$key]);
+							}
+						}
+					}
+					break;
+				default:
+						
+			}
+			
+			$descriptions = signed_getFieldDescriptions();
+			
+			$form = new signedThemeForm($title, $name, $action, 'POST', true, $summary = '');
+			$form->setExtra('enctype="multipart/form-data"');
+			$element = array();
+			foreach($fields as $name => $field) {
+				$xtradesc = "";
+				if (in_array($name, $_SESSION["signed"]['request']['fields'][$mode])) {
+					switch($fields[$name]['type'])
+					{
+						case 'countries':
+							
+							$element[$name] = new signedFormSelectCountry($fields[$name]['title'], $mode . '[' . $fields[$name]['name'] . ']', (isset($_REQUEST[$mode][$name])?$_REQUEST[$mode][$name]:(isset($package[$mode][$name])?$package[$mode][$name]:(isset($package[$mode][$name])?$package[$mode][$name]:''))));
+							break;
+						case 'dates':
+							$element[$name] = new signedFormTextDateSelect($fields[$name]['title'], $mode . '[' . $fields[$name]['name'] . ']', 15, (isset($_REQUEST[$mode][$name])?$_REQUEST[$mode][$name]:(isset($package[$mode][$name])?$package[$mode][$name]:'')));
+							break;
+						case 'emails':
+							$element[$name] = new signedFormText($fields[$name]['title'], $mode . '[' . $fields[$name]['name'] . ']', 35, 255, (isset($_REQUEST[$mode][$name])?$_REQUEST[$mode][$name]:(isset($package[$mode][$name])?$package[$mode][$name]:'')));
+							break;
+						case 'enumerators':
+							$element[$name] = new signedFormSelectEnumerator($fields[$name]['title'], $mode . '[' . $fields[$name]['name'] . ']', (isset($_REQUEST[$mode][$name])?$_REQUEST[$mode][$name]:(isset($package[$mode][$name])?$package[$mode][$name]:'')), $name);
+							break;
+						case 'images':
+							$element[$name] = new signedFormFile($fields[$name]['title'], $mode . '-' . $name, 1024 * 1024 * 1024 * 2048);
+							break;
+						case 'photos':
+							$element[$name] = new signedFormFile($fields[$name]['title'], $mode . '-' . $name, 1024 * 1024 * 1024 * 2048);
+							$xtradesc = "<br/>Minimal Dimenions " . _SIGNED_PHOTO_WIDTH . 'x' . _SIGNED_PHOTO_HEIGHT;
+							break;
+						case 'logos':
+							$element[$name] = new signedFormFile($fields[$name]['title'], $mode . '-' . $name, 1024 * 1024 * 1024 * 2048);
+							$xtradesc = "<br/>Minimal Dimenions " . _SIGNED_LOGO_WIDTH . 'x' . _SIGNED_LOGO_HEIGHT;
+							break;
+						case 'months':
+							$element[$name] = new signedFormSelectMonths($fields[$name]['title'], $mode . '[' . $fields[$name]['name'] . ']', (isset($_REQUEST[$mode][$name])?$_REQUEST[$mode][$name]:(isset($package[$mode][$name])?$package[$mode][$name]:'')));
+							break;
+						case 'numeric':
+							$element[$name] = new signedFormText($fields[$name]['title'], $mode . '[' . $fields[$name]['name'] . ']', 35, 255, (isset($_REQUEST[$mode][$name])?$_REQUEST[$mode][$name]:(isset($package[$mode][$name])?$package[$mode][$name]:'')));
+							break;
+						case 'strings':
+							$element[$name] = new signedFormText($fields[$name]['title'], $mode . '[' . $fields[$name]['name'] . ']', 35, 255, (isset($_REQUEST[$mode][$name])?$_REQUEST[$mode][$name]:(isset($package[$mode][$name])?$package[$mode][$name]:'')));
+							break;
+						case 'urls':
+							$element[$name] = new signedFormText($fields[$name]['title'], $mode . '[' . $fields[$name]['name'] . ']', 35, 255, (isset($_REQUEST[$mode][$name])?$_REQUEST[$mode][$name]:(isset($package[$mode][$name])?$package[$mode][$name]:'')));
+							break;
+						case 'years':
+							$element[$name] = new signedFormSelectYears($fields[$name]['title'], $mode . '[' . $fields[$name]['name'] . ']', (isset($_REQUEST[$mode][$name])?$_REQUEST[$mode][$name]:(isset($package[$mode][$name])?$package[$mode][$name]:'')));
+							break;
+					}
+					if (isset($descriptions[$fields[$name]['name']]))
+						$element[$name]->setDescription("Request For Editing by Signee Resource ~ " . $descriptions[$fields[$name]['name']].$xtradesc);
+						
+				} else {
+					$element[$name] = new signedFormElementTray($fields[$name]['title'], "");
+					$element[$name]->addElement(new signedFormHidden($mode . '[' . $fields[$name]['name'] . ']', (isset($package[$mode][$name])?$package[$mode][$name]:'')));
+					$element[$name]->addElement(new signedFormLabel("", (isset($package[$mode][$name])?$package[$mode][$name]:'')));
+					if (isset($descriptions[$fields[$name]['name']]))
+						$element[$name]->setDescription($descriptions[$fields[$name]['name']].$xtradesc);
+						
+				}	
+				
+				$element[$name]->setExtra(" onclick=\"javascript:ValidateLengthOperations('".$name."')\" onchange=\"javascript:ValidateLengthOperations('".$name."')\" ");
+				
+				if (is_object($element[$name])) {
+					$form->addElement($element[$name], $fields[$name]['required']);
+					if ($fields[$name]['required'] == true) {
+						$form->addElement(new signedFormHidden('fields-required['.$fields[$name]['name'].']', $fields[$name]['name']));
+					}
+					$form->addElement(new signedFormHidden('fields['.$fields[$name]['name'].']', $fields[$name]['name']));
+				}
+			}
+			$form->addElement(new signedFormHidden('fields-typal', $mode));
+			$form->addElement(new signedFormHidden('prompt', $_SESSION["signed"]['action']));
+			$form->addElement(new signedFormHidden('step', $_SESSION["signed"]['step']));
+			$form->addElement(new signedFormHidden('stepsleft', implode(',', $_SESSION["signed"]['stepstogo'])));
+			$form->addElement(new signedFormButton('', 'submit-next', 'Next Step -->', 'submit'));
+			
+			return $form->render();
+		}
+		
+		function verify($mode = '', $variables = array(), $step = '')
+		{
+						
+			if ($GLOBALS['signedSecurity']->check(true, $variables['SIGNED_TOKEN_REQUEST'])==false)
+				return false;
+			
+			$fields = returnKeyed($mode, 'signed_getFieldsArray');
+			switch($mode) {
+				case 'identification':
+					$identifications = returnKeyed(_SIGNATURE_MODE, 'signed_getIdentificationsArray');
+					if (count($identifications[$_SESSION["signed"]['step']]['fields'])>0) {
+						foreach(array_keys($fields) as $key) {
+							if (!in_array($key, $identifications[$_SESSION["signed"]['step']]['fields'])) {
+								unset($fields[$key]);
+							}
+						}
+					}
+					break;
+				default:
+						
+			}
+			
+			$validations = returnKeyed(_SIGNATURE_MODE, "signed_getValidationsArray");
+			foreach($variables['fields'] as $key => $field)
+			{
+				if (in_array($field, $_SESSION["signed"]['request']['fields'][$mode])) {
+					if (in_array($field, $validations['email']['validation']['fields']) && !empty($variables[$mode][$field])) {
+						if (!checkEmail($variables[$mode][$field])) {
+							$GLOBALS['errors'][] = "The field titled: <em><strong>" . $fields[$field]['title'] . '</strong></em> ~ is required to have a valid email address, the current data in this field doesn\'t validate as proper internet email address!';
+						}
+						if (in_array($field, $validations['banning']['validation']['fields'])) {
+							if (!signed_checkForBans($variables[$mode][$field], 'email')) {
+								$GLOBALS['errors'][] = "The field titled: <em><strong>" . $fields[$field]['title'] . '</strong></em> ~ email address has linkages to either a domain or IP address that is banned on this system, you must change this to proceed to the next step!';
+							}
+						}
+					} elseif (in_array($field, $validations['url']['validation']['fields']) && !empty($variables[$mode][$field])) {
+						$variables[$mode][$field] = formatURL($variables[$mode][$field]);
+						if (in_array($field, $validations['banning']['validation']['fields'])) {
+							if (!signed_checkForBans($variables[$mode][$field], 'url')) {
+								$GLOBALS['errors'][] = "The field titled: <em><strong>" . $fields[$field]['title'] . '</strong></em> ~ internet URL has linkages to either a domain or IP address that is banned on this system, you must change this to proceed to the next step!';
+							}
+						}
+					}
+				}
+			}
+				
+			foreach($variables['fields-required'] as $key => $field) 
+			{
+				if ((empty($variables[$mode][$field]) || strlen($variables[$mode][$field]) == 0) && $fields[$field]['type'] != 'images') {
+					$GLOBALS['errors'][] = "The field titled: <em><strong>" . $fields[$field]['title'] . '</strong></em> ~ is required to continue to the next step!';
+				}
+					
+			}
+			if (count($GLOBALS['errors'])>0)
+				return false;
+			
+			$package = array();
+			foreach($fields as $name => $field) {
+				if (isset($variables[$mode][$name])) {
+					if (strlen(trim($variables[$mode][$name]))) {
+						switch($fields[$name]['type'])
+						{
+							case 'countries':
+								$package[$name] = $variables[$mode][$name];
+								break;
+							case 'dates':
+								$package[$name] = $variables[$mode][$name];
+								break;
+							case 'emails':
+								if (($email=checkEmail($variables[$mode][$name], false)) == false) {
+									$GLOBALS['errors'][$fields[$name]['name']] = "The field:~ <em>".$fields[$name]['title']."<em> has an invalid email address in it, it requires a valid email address!";
+								} else {
+									$package[$name] = $email;
+								}
+								break;
+							case 'enumerators':
+								$package[$name] = $variables[$mode][$name];
+								break;
+							case 'months':
+								$package[$name] = $variables[$mode][$name];
+								break;
+							case 'numeric':
+								if (is_numeric($variables[$mode][$name]) == false) {
+									$GLOBALS['errors'][$fields[$name]['name']] = "The field:~ <em>".$fields[$name]['title']."<em> is required to be numeric, only!";
+								} else {
+									$package[$name] = $variables[$mode][$name];
+								}
+								break;
+							case 'strings':
+								$package[$name] = $variables[$mode][$name];
+								break;
+							case 'urls':
+								$package[$name] = formatURL($variables[$mode][$name]);
+								break;
+							case 'years':
+								$package[$name] = $variables[$mode][$name];
+								break;
+						}
+					}
+				}
+			}
+
+			foreach($fields as $name => $field) {
+				switch($fields[$name]['type'])
+				{
+					case 'images':
+						$identifications = returnKeyed($mode, 'signed_getIdentificationsArray');
+						$dimensions = signed_getDimensionsArray();
+						$minimal = array();
+						$pass=false;
+						try {
+							$img = WideImage::loadFromUpload($_POST['signed_upload_file'][0]);			
+							$width = $img->getWidth();
+							$height = $img->getWidth();
+							foreach($dimensions['upload'] as $scape => $values) {
+								foreach($values as $state => $data) {
+									if ($pass==false) {
+										if ($width>=$data['width'] && $height>=$data['height']) {
+											$resizescape = $scape;
+											$resizestate = $state;
+											$pass=true;
+										} else {
+											if (($data['width']<$minimal[$scape]['width'] || !isset($minimal[$scape]['width']) && ($data['height']<$minimal[$scape]['height'] || !isset($minimal[$scape]['height']))))
+											{
+												$minimal[$scape]['width'] = $data['width'];
+												$minimal[$scape]['height'] = $data['height'];
+												$minimal[$scape]['display'] = $data['width'].'x'.$data['height'];
+											}
+										}
+									}
+								}
+							}
+							if ($pass==true) {
+								$resizedimg = $img->resize($dimensions['resize'][$resizescape][$resizestate]['width'], $dimensions['resize'][$resizescape][$resizestate]['height']);
+								$tmpstore = array();
+								$tmpstore['identification']['data-mimetype'] = 'image/png';
+								$tmpstore['identification']['data-pack'] = 'base64';
+								$tmpstore['identification']['data'] = base64_encode($resizedimg->asString('png'));
+								$tmpstore['identification']['md5'] = md5($package['identification']['data']);
+								$tmpstore['identification']['width'] = $resizedimg->getWidth();
+								$tmpstore['identification']['height'] = $resizedimg->getHeight();
+								$tmpstore['identification']['points'] = $identifications[constant('_SIGNATURE_MODE')][$step]['points'];
+								$tmpstore['identification']['title'] = $identifications[constant('_SIGNATURE_MODE')][$step]['title'];
+								if ((isset($variables['expiry-month']) && isset($variables['expiry-year'])) && (!empty($variables['expiry-month']) && !empty($variables['expiry-year']))) 
+								{
+									$tmpstore['identification']['expires'] = strtotime($variables['expiry-year'].'-'.$variables['expiry-month'].'-01 00:00:01');
+								} else {
+									$tmpstore['identification']['expires'] = 'never';
+								}
+								$package[$name] = "cached:" . $identity = sha1($name . json_encode($tmpstore));
+								signedCache::getInstance()->write('data_'.$identity, $tmpstore, 3600 * 96);
+								if (is_object($GLOBALS['logger']))
+									$GLOBALS['logger']->logBytes($_FILES[$_POST['signed_upload_file'][0]]['size'], 'uploaded');
+							} else {
+								$GLOBALS['errors'][$fields[$name]['name']] = "The field:~ <em>".$fields[$name]['title']."<em> was the incorrect dimenions the supported minimal sized dimensions for Landscape are: ".$minimal['landscape']['display'] . " as well as for Portrait: " . $minimal['portrait']['display'] . " please rescan your image to a higher resolution and re-submit!";
+							}
+						}
+						catch (Exception $e) {
+							$GLOBALS['errors'][] = "Image upload error with the following exception: $e";
+						}
+						break;
+					case 'photos':
+						try {
+							$img = WideImage::loadFromUpload($_POST['signed_upload_file'][0]);			
+							$width = $img->getWidth();
+							$height = $img->getWidth();
+		
+							if ($width<_SIGNED_PHOTO_WIDTH && $height<_SIGNED_PHOTO_HEIGHT) {
+								$GLOBALS['errors'][$fields[$name]['name']] = "The field:~ <em>".$fields[$name]['title']."<em> was the incorrect dimenions the supported minimal sized dimensions for are: "._SIGNED_PHOTO_WIDTH .'x'._SIGNED_PHOTO_HEIGHT . " please rescan or take your image to a higher resolution and re-submit!";
+								return false;
+							} 
+							$resizedimg = $img->resize(_SIGNED_PHOTO_WIDTH, _SIGNED_PHOTO_HEIGHT);
+							$tmpstore = array();
+							$tmpstore['data-mimetype'] = 'image/png';
+							$tmpstore['data-pack'] = 'base64';
+							$tmpstore['data'] = base64_encode($resizedimg->asString('png'));
+							$tmpstore['md5'] = md5($package['data']);
+							$tmpstore['width'] = $resizedimg->getWidth();
+							$tmpstore['height'] = $resizedimg->getHeight();
+							$package[$name] = "cached:" . $identity = sha1($name . json_encode($tmpstore));
+							signedCache::getInstance()->write('data_'.$identity, $tmpstore, 3600 * 96);
+							if (is_object($GLOBALS['logger']))
+								$GLOBALS['logger']->logBytes($_FILES[$_POST['signed_upload_file'][0]]['size'], 'uploaded');
+						}
+						catch (Exception $e) {
+							$GLOBALS['errors'][] = "Image upload error with the following exception: $e";
+						}
+						break;
+					case 'logos':
+						try {
+							$img = WideImage::loadFromUpload($_POST['signed_upload_file'][0]);			
+							$width = $img->getWidth();
+							$height = $img->getWidth();
+		
+							if ($width<_SIGNED_LOGO_WIDTH && $height<_SIGNED_LOGO_HEIGHT) {
+								$GLOBALS['errors'][$fields[$name]['name']] = "The field:~ <em>".$fields[$name]['title']."<em> was the incorrect dimenions the supported minimal sized dimensions for are: "._SIGNED_LOGO_WIDTH .'x'._SIGNED_LOGO_HEIGHT . " please rescan or take your image to a higher resolution and re-submit!";
+								return false;
+							} 
+							$resizedimg = $img->resize(_SIGNED_LOGO_WIDTH, _SIGNED_LOGO_HEIGHT);
+							$tmpstore = array();
+							$tmpstore['data-mimetype'] = 'image/png';
+							$tmpstore['data-pack'] = 'base64';
+							$tmpstore['data'] = base64_encode($resizedimg->asString('png'));
+							$tmpstore['md5'] = md5($package['data']);
+							$tmpstore['width'] = $resizedimg->getWidth();
+							$tmpstore['height'] = $resizedimg->getHeight();
+							$package[$name] = "cached:" . $identity = sha1($name . json_encode($tmpstore));
+							signedCache::getInstance()->write('data_'.$identity, $tmpstore, 3600 * 96);
+							if (is_object($GLOBALS['logger']))
+								$GLOBALS['logger']->logBytes($_FILES[$_POST['signed_upload_file'][0]]['size'], 'uploaded');
+						}
+						catch (Exception $e) {
+							$GLOBALS['errors'][] = "Image upload error with the following exception: $e";
+						}
+						break;
+					
+					}
+			}	
+			return $package;
+		}
+	}
+}
+
+?>

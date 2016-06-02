@@ -1,0 +1,17 @@
+To {PERSON_FOR},
+
+Your Digital signature with the serial number of {SERIAL_NUMBER} has had some of your identification expire.
+
+The identification details that have exprired are:
+
+	Identification Type: {IDENTIFICATION_TYPE}
+	Identification Number: {IDENTIFICATION_NUMBER}
+	Expiry Month: {IDENTIFICATION_EXPIRE_MONTH}
+	Expiry Year: {IDENTIFICATION_EXPIRE_YEAR}
+
+Your digital signature will be marked expired until you update this identification with the same type you can do this by going to this URL:~ {UPDATE_URL}
+
+Many thanks,
+
+{SITE_COMPANY}
+{SITE_URL}	

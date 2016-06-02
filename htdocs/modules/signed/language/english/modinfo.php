@@ -1,0 +1,218 @@
+<?php
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		language
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+
+	//Control Panel menus
+	define('_SIGNED_MI_INDEX', 'Dashboard');
+	define('_SIGNED_MI_SIGNATURES', 'Manifest');
+	define('_SIGNED_MI_EVENTS', 'Event logs');
+	define('_SIGNED_MI_ABOUT', 'About Self Signed');
+	
+	
+	// Module Definitions
+	define('_SIGNED_MI_MODULE_NAME', 'Digitally Self Signed');
+	define('_SIGNED_MI_MODULE_VERSION', '2.2');
+	define('_SIGNED_MI_MODULE_DESCRIPTION', 'Release Candidate');
+	define('_SIGNED_MI_MODULE_AUTHOR', 'Simon Antony Roberts <wishcraft@users.sourceforge.net>');
+	define('_SIGNED_MI_MODULE_CREDITS', 'Wishcraft');
+	
+	// Module Preferences
+	define('_SIGNED_MI_MEMORY_LIMITS', 'Number of Megabytes of memory to allocate');
+	define('_SIGNED_MI_MEMORY_LIMITS_DESC', '');
+	define('_SIGNED_MI_HTACCESS', 'Enable .htaccess modrewrite shorter URLS');
+	define('_SIGNED_MI_HTACCESS_DESC', '');
+	define('_SIGNED_MI_HTACCESS_PATH', 'Signing path on base of URL');
+	define('_SIGNED_MI_HTACCESS_PATH_DESC', 'Only when  .htaccess modrewrite is enabled!');
+	define('_SIGNED_MI_HTACCESS_URL_API', 'Signer full URL for the API');
+	define('_SIGNED_MI_HTACCESS_URL_API_DESC', 'Only when  .htaccess modrewrite is enabled!');
+	define('_SIGNED_MI_HTACCESS_EXTENSION', 'File extension when need to specify with .htaccess');
+	define('_SIGNED_MI_HTACCESS_EXTENSION_DESC', 'Only when  .htaccess modrewrite is enabled!');
+	define('_SIGNED_MI_TITLE', 'Default Title of Application');
+	define('_SIGNED_MI_TITLE_DESC', '');
+	define('_SIGNED_MI_EMAIL', 'Default Email of Module');
+	define('_SIGNED_MI_EMAIL_DESC', '');
+	define('_SIGNED_MI_USE_SSL', 'Force use of SSL when enabled!');
+	define('_SIGNED_MI_USE_SSL_DESC', '');
+	define('_SIGNED_MI_VERIFY_EMAIL', 'Verify email addresses when specified');
+	define('_SIGNED_MI_VERIFY_EMAIL_DESC', '');
+	define('_SIGNED_MI_VERIFY_MOBILE', 'Verify mobile numbers when specified');
+	define('_SIGNED_MI_VERIFY_MOBILE_DESC', '');
+	define('_SIGNED_MI_PHPTIMEZONE', 'PHP Timezone for the signatures');
+	define('_SIGNED_MI_PHPTIMEZONE_DESC', '');
+	define('_SIGNED_MI_YEARS_NUMBEROF', 'Number of year in advance selectable');
+	define('_SIGNED_MI_YEARS_NUMBEROF_DESC', '');
+	define('_SIGNED_MI_WATERMARK_GIF', 'Watermarking GIF or file!');
+	define('_SIGNED_MI_WATERMARK_GIF_DESC', 'Must be 8 bit');
+	define('_SIGNED_MI_WATERMARK_WEIGHT', 'Watermarking weighting');
+	define('_SIGNED_MI_WATERMARK_WEIGHT_DESC', '');
+	define('_SIGNED_MI_WATERMARK_SCALE', 'Watermarking scalar');
+	define('_SIGNED_MI_WATERMARK_SCALE_DESC', '');
+	define('_SIGNED_MI_WATERMARK_MINOPACITY', 'Watermarking minimal opacity percentile');
+	define('_SIGNED_MI_WATERMARK_MINOPACITY_DESC', 'Select from this range in random sequences.');
+	define('_SIGNED_MI_WATERMARK_MAXOPACITY', 'Watermarking maximum opacity percentile');
+	define('_SIGNED_MI_WATERMARK_MAXOPACITY_DESC', 'Select from this range in random sequences.');
+	define('_SIGNED_MI_ERRORS_LOGGED', 'Have errors all logged');
+	define('_SIGNED_MI_ERRORS_LOGGED_DESC', '');
+	define('_SIGNED_MI_ERRORS_DISPLAYED', 'Haver errors if occured then displayed');
+	define('_SIGNED_MI_ERRORS_DISPLAYED_DESC', '');
+	define('_SIGNED_MI_ERRORS_REPORTING', 'Type of error repoting to allow');
+	define('_SIGNED_MI_ERRORS_REPORTING_DESC', '');
+	define('_SIGNED_MI_DISCOVERABLE', 'Enable discoverable services');
+	define('_SIGNED_MI_DISCOVERABLE_DESC', '');
+	define('_SIGNED_MI_FORMAT_JSON', 'JSON');
+	define('_SIGNED_MI_FORMAT_SERIAL', 'PHP Serialised');
+	define('_SIGNED_MI_FORMAT_XML', 'eXtensible Markup Language');
+	define('_SIGNED_MI_STORAGE', 'Default storage of data will be this type!');
+	define('_SIGNED_MI_STORAGE_DESC', '');
+	define('_SIGNED_MI_STORAGE_LOGS', 'Logs are stored in this file type!');
+	define('_SIGNED_MI_STORAGE_LOGS_DESC', '');
+	define('_SIGNED_MI_STORAGE_SIGNED', 'Signature data will be stored in this file type!');
+	define('_SIGNED_MI_STORAGE_SIGNED_DESC', '');
+	define('_SIGNED_MI_STORAGE_RESOURCES', 'Resources data will be stored in this file type!');
+	define('_SIGNED_MI_STORAGE_RESOURCES_DESC', '');
+	define('_SIGNED_MI_STORAGE_URLS', 'Hot-link hop data will be stored in this file type!');
+	define('_SIGNED_MI_STORAGE_URLS_DESC', '');
+	define('_SIGNED_MI_LOGOWIDTH', 'Maximum of pixels width in the Entity logo embedded!');
+	define('_SIGNED_MI_LOGOWIDTH_DESC', 'Size of the Entity logo to embed in the Signature Data');
+	define('_SIGNED_MI_LOGOHEIGHT', 'Maximum of pixels height in the Entity logo embedded!');
+	define('_SIGNED_MI_LOGOHEIGHT_DESC', 'Size of the individuals photo to embed in the Signature Data');
+	define('_SIGNED_MI_PHOTOWIDTH', 'Maximum of pixels width in the individuals photo embedded!');
+	define('_SIGNED_MI_PHOTOWIDTH_DESC', 'Size of the individuals photo to embed in the Signature Data');
+	define('_SIGNED_MI_PHOTOHEIGHT', 'Maximum of pixels height in the individuals photo embedded!');
+	define('_SIGNED_MI_PHOTOHEIGHT_DESC', 'Size of the Entity logo to embed in the Signature Data');
+	define('_SIGNED_MI_API_USER', 'User to log API users in under!');
+	define('_SIGNED_MI_API_USER_DESC', '');
+	define('_SIGNED_MI_API_FORMAT', 'Default format for output on the API');
+	define('_SIGNED_MI_API_FORMAT_DESC', '');
+	define('_SIGNED_MI_API_ENABLED', 'Enable the API');
+	define('_SIGNED_MI_API_ENABLED_DESC', 'Turns the signing API on/off.');
+	define('_SIGNED_MI_API_SIGN', 'Enable API Function: Sign');
+	define('_SIGNED_MI_API_SIGN_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_VERIFY', 'Enable API Function: Verify');
+	define('_SIGNED_MI_API_VERIFY_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_VERIFICATION', 'Enable API Function: Verification');
+	define('_SIGNED_MI_API_VERIFICATION_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_SITES', 'Enable API Function: Sites');
+	define('_SIGNED_MI_API_SITES_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_LANGUAGES', 'Enable API Function: Languages');
+	define('_SIGNED_MI_API_LANGUAGES_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_CLASSES', 'Enable API Function: Classes');
+	define('_SIGNED_MI_API_CLASSES_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_DESCRIPTIONS', 'Enable API Function: Descriptions');
+	define('_SIGNED_MI_API_DESCRIPTIONS_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_ENUMERATORS', 'Enable API Function: Enumerators');
+	define('_SIGNED_MI_API_ENUMERATORS_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_FIELDS', 'Enable API Function: Fields');
+	define('_SIGNED_MI_API_FIELDS_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_FIELDTYPES', 'Enable API Function: Fieldtypes');
+	define('_SIGNED_MI_API_FIELDTYPES_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_IDENTIFICATIONS', 'Enable API Function: Identifications');
+	define('_SIGNED_MI_API_IDENTIFICATIONS_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_PROMPTS', 'Enable API Function: Prompts');
+	define('_SIGNED_MI_API_PROMPTS_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_PROVIDERS', 'Enable API Function: Providers');
+	define('_SIGNED_MI_API_PROVIDERS_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_SIGNATURES', 'Enable API Function: Signatures');
+	define('_SIGNED_MI_API_SIGNATURES_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_VALIDATIONS', 'Enable API Function: Validations');
+	define('_SIGNED_MI_API_VALIDATIONS_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_PROCESSES', 'Enable API Function: Processes');
+	define('_SIGNED_MI_API_PROCESSES_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_LANGAUGE', 'Enable API Function: Language');
+	define('_SIGNED_MI_API_LANGAUGE_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_STATES', 'Enable API Function: States');
+	define('_SIGNED_MI_API_STATES_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_REQUEST', 'Enable API Function: Request');
+	define('_SIGNED_MI_API_REQUEST_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_API_BANNED', 'Enable API Function: Banned');
+	define('_SIGNED_MI_API_BANNED_DESC', 'Turns on/off a function on the signing API.');
+	define('_SIGNED_MI_BANNING_COOKIE', 'Cookie name for the banning cookie');
+	define('_SIGNED_MI_BANNING_COOKIE_DESC', '');
+	define('_SIGNED_MI_EMAIL_FROMADDR', 'Email address to show email sent from this module came from');
+	define('_SIGNED_MI_EMAIL_FROMADDR_DESC', '');
+	define('_SIGNED_MI_EMAIL_FROMNAME', 'Entity/Persons name to show email sent from this module came from');
+	define('_SIGNED_MI_EMAIL_FROMNAME_DESC', '');
+	define('_SIGNED_MI_EMAIL_PRIORITY', 'Priority of the mail sent');
+	define('_SIGNED_MI_EMAIL_PRIORITY_DESC', '');
+	define('_SIGNED_MI_OPTION_EMAIL_PRIORITY_HIGH', 'High Priority');
+	define('_SIGNED_MI_OPTION_EMAIL_PRIORITY_NORMAL', 'Normal Priority');
+	define('_SIGNED_MI_OPTION_EMAIL_PRIORITY_LOW', 'Low Priority');
+	define('_SIGNED_MI_EMAIL_METHOD', 'Method of sending the mail');
+	define('_SIGNED_MI_EMAIL_METHOD_DESC', '');
+	define('_SIGNED_MI_EMAIL_SMTP_HOST', 'Hostname for the SMTP Service');
+	define('_SIGNED_MI_EMAIL_SMTP_HOST_DESC', '');
+	define('_SIGNED_MI_EMAIL_SMTP_USER', 'Username for the SMTP Service');
+	define('_SIGNED_MI_EMAIL_SMTP_USER_DESC', '');
+	define('_SIGNED_MI_EMAIL_SMTP_PASS', 'Password for the SMTP Service');
+	define('_SIGNED_MI_EMAIL_SMTP_PASS_DESC', '');
+	define('_SIGNED_MI_EMAIL_SENDMAIL', 'Path for SendMail on linux');
+	define('_SIGNED_MI_EMAIL_SENDMAIL_DESC', '');
+	define('_SIGNED_MI_EMAIL_QUEUED', 'Seconds at absolution of maximum that mail is in queued for');
+	define('_SIGNED_MI_EMAIL_QUEUED_DESC', '');
+	define('_SIGNED_MI_SMS_METHOD', 'SMS Gateway method to use');
+	define('_SIGNED_MI_SMS_METHOD_DESC', '');
+	define('_SIGNED_MI_SMS_FROMNUMBER', 'SMS Sent from this Number');
+	define('_SIGNED_MI_SMS_FROMNUMBER_DESC', '');
+	define('_SIGNED_MI_SMS_CARDBOARDFISH_URI', 'Cardboardfish SMS Gateway URI');
+	define('_SIGNED_MI_SMS_CARDBOARDFISH_URI_DESC', '');
+	define('_SIGNED_MI_SMS_CARDBOARDFISH_USER', 'Cardboardfish SMS Gateway Username');
+	define('_SIGNED_MI_SMS_CARDBOARDFISH_USER_DESC', '');
+	define('_SIGNED_MI_SMS_CARDBOARDFISH_PASS', 'Cardboardfish SMS Gateway Password');
+	define('_SIGNED_MI_SMS_CARDBOARDFISH_PASS_DESC', '');
+	
+	
+	// Additions in version 2.1.9
+	// Module Preferences
+	define('_SIGNED_MI_COMPRESSION', 'Enable Data Compression of File Store System');
+	define('_SIGNED_MI_COMPRESSION_DESC', 'This currently uses mysql ~ compress(); decompress() in an open select statement!');
+	define('_SIGNED_MI_ENCRYPTION', 'Enable Cycling Algorithm File Encryption System');
+	define('_SIGNED_MI_ENCRYPTION_DESC', '');
+	define('_SIGNED_MI_CIPHERS', 'Cipher algorithms to use in the cycle');
+	define('_SIGNED_MI_CIPHERS_DESC', '');
+	define('_SIGNED_MI_SSLPEMKEY_PATH', 'OpenSSL-RSA PEM Key path for [rsa-opensll] cipher');
+	define('_SIGNED_MI_SSLPEMKEY_PATH_DESC', '');
+	define('_SIGNED_MI_USEOCR', 'Support OCR API');
+	define('_SIGNED_MI_USEOCR_DESC', '');
+	define('_SIGNED_MI_OCRAPI', 'Path for the Online OCR API');
+	define('_SIGNED_MI_OCRAPI_DESC', '');
+	
+	
+	// Additions in version 2.2
+	// Module Preferences
+	define("_SIGNED_MI_REDIRECT_SALTYGENNEEDED","You need to generate your blowfish salt encryption key, or recover your old one!<br/><br/>Redirecting you to the wizard for this!");
+	define('_SIGNED_MI_SIP_SERVER', 'Internal Phone SIP Network Server');
+	define('_SIGNED_MI_SIP_SERVER_DESC', '');
+	define('_SIGNED_MI_SIP_USER', 'SIP Network Username');
+	define('_SIGNED_MI_SIP_USER_DESC', '');
+	define('_SIGNED_MI_SIP_PASS', 'SIP Network Password');
+	define('_SIGNED_MI_SIP_PASS_DESC', '');
+	define('_SIGNED_MI_REDIRECT_HEADERSENT', 'Headers Sent unable to redirect with Location ~ using HTML Redirect Instead<br/>Please wait a momemt!');
+	
+?>

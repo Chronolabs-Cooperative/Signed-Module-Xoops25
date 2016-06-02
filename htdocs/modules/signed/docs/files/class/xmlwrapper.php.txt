@@ -1,0 +1,120 @@
+<?php
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		class
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+
+
+defined('_PATH_ROOT') or die('Restricted access');
+
+if (!class_exists("XmlDomConstruct")) {
+	/**
+	 * class XmlDomConstruct
+	 *
+	 * 	Extends the DOMDocument to implement personal (utility) methods.
+	 *
+	 * @author Simon Roberts (Chronolabs) simon@labs.coop
+	 * @author Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+	 */
+	class XmlDomConstruct extends DOMDocument {
+
+		/**
+		 * Constructs elements and texts from an array or string.
+		 * The array can contain an element's name in the index part
+		 * and an element's text in the value part.
+		 *
+		 * It can also creates an xml with the same element tagName on the same
+		 * level.
+		 *
+		 * ex:
+		 * <nodes>
+		 *   <node>text</node>
+		 *   <node>
+		 *     <field>hello</field>
+		 *     <field>world</field>
+		 *   </node>
+		 * </nodes>
+		 *
+		 * Array should then look like:
+		 *
+		 * Array (
+		 *   "nodes" => Array (
+		 *     "node" => Array (
+		 *       0 => "text"
+		 *       1 => Array (
+		 *         "field" => Array (
+		 *           0 => "hello"
+		 *           1 => "world"
+		 *         )
+		 *       )
+		 *     )
+		 *   )
+		 * )
+		 *
+		 * @param mixed $mixed An array or string.
+		 *
+		 * @param DOMElement[optional] $domElement Then element
+		 * from where the array will be construct to.
+		 *
+		 * @author Simon Roberts (Chronolabs) simon@labs.coop
+		 *
+		 */
+		public function fromMixed($mixed, DOMElement $domElement = null) {
+
+			$domElement = is_null($domElement) ? $this : $domElement;
+
+			if (is_array($mixed)) {
+				foreach( $mixed as $index => $mixedElement ) {
+
+					if ( is_int($index) ) {
+						if ( $index == 0 ) {
+							$node = $domElement;
+						} else {
+							$node = $this->createElement(htmlentities($domElement->tagName, ENT_XML1));
+							$domElement->parentNode->appendChild($node);
+						}
+					}
+
+					else {
+						$node = $this->createElement(htmlentities($index, ENT_XML1));
+						$domElement->appendChild($node);
+					}
+
+					$this->fromMixed($mixedElement, $node);
+
+				}
+			} else {
+				$domElement->appendChild($this->createTextNode($mixed));
+			}
+
+		}
+			
+	}
+}
+
+?>

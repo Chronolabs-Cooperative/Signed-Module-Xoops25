@@ -1,0 +1,10 @@
+To {PERSON_FOR},
+
+Your Digital signature with the serial number of {SERIAL_NUMBER} expired on the:~ {SIGNED_EXPIRED}
+
+You cannot restore this signarate if you need a new one the please create a new signature.
+
+Many thanks,
+
+{SITE_COMPANY}
+{SITE_URL}	

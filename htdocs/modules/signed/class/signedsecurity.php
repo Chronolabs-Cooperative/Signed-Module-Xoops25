@@ -1,0 +1,252 @@
+<?php
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		class
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+
+
+defined('_PATH_ROOT') or die('Restricted access');
+
+/**
+ *
+ * @author Simon Roberts <simon@labs.coop>
+ *
+ */
+include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'signedciphers.php';
+
+/**
+ * 
+ * @author Simon Roberts <simon@labs.coop>
+ *
+ */
+class signedSecurity extends XoopsSecurity
+{
+
+
+	/**
+	 *
+	 * @return Ambigous <NULL, signedProcessess>
+	 */
+	static function getInstance()
+	{
+		static $object = NULL;
+		if (!is_object($object))
+			$object = new signedSecurity();
+		return $object;
+	}
+	 
+
+    /**
+     *
+     */
+    function getBannedHostnames()
+    {
+    	return signedArrays::getInstance()->trimExplode(signedArrays::getFile(_PATH_PROCESSES . DIRECTORY_SEPARATOR . 'banned-hostnames-for-urls-and-emails.txt'));
+    }
+    
+    
+    /**
+     *
+     */
+    function getBannedIP()
+    {
+    	return signedArrays::getInstance()->trimExplode(signedArrays::getFile(_PATH_PROCESSES . DIRECTORY_SEPARATOR . 'banned-ips-for-urls-and-emails.txt'));
+    }
+    
+    
+    /**
+     *
+     */
+    function checkBans()
+    {
+    	$domains = array();
+    	$ips = array();
+    	$banned = array('domains' => $this->getBannedHostnames(), 'ips' => $this->getBannedIP());
+    	if (count($banned['domains'])||count($banned['ips'])) {
+    		$domains[] = gethostbyaddr($ips[] = $this->getIP(true));
+    		if (isset($_SERVER['HTTP_REFERER'])) {
+    			$ips[] = gethostbyname($domains[] = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST));
+    		}
+    		foreach($banned as $key => $bans) {
+    			if (!empty($bans)) {
+    				switch ($key) {
+    					case "domains":
+    						foreach($bans as $host) {
+    							foreach($domains as $domain) {
+    								if (strlen($domain)>=strlen($host)) {
+    									if (substr(strtolower($domain), strlen($domain) - strlen($host), strlen($host))==strtolower($host)) {
+    										if (is_object(signedLogger::getInstance()))
+    											signedLogger::getInstance()->logBannedIntrusion($key);
+    										define("_SIGNED_BANNED", true);
+    									}
+    								}
+    							}
+    						}
+    						break;
+    					case "ips":
+    						foreach($bans as $address) {
+    							foreach($ips as $ip) {
+    								if (strtolower($ip)==strtolower($address)) {
+    									if (is_object(signedLogger::getInstance()))
+    										signedLogger::getInstance()->logBannedIntrusion($key);
+    									define("_SIGNED_BANNED", true);
+    								}
+    							}
+    						}
+    						break;
+    				}
+    			}
+    				
+    		}
+    	}
+    	return true;
+    }
+    
+    
+    /**
+     *
+     */
+    function checkForBans($value = '', $type = 'email')
+    {
+    
+    	$banned = array('domains' => $this->getBannedHostnames(), 'ips' => $this->getBannedIP());
+    	$domains = array();
+    	$ips = array();
+    	switch($type)
+    	{
+    		case "url":
+    			$ips[] = gethostbyname($domains[] = parse_url($value, PHP_URL_HOST));
+    			break;
+    		case "email":
+    			$parts = explode("@", $value);
+    			$ips[] = gethostbyname($domains[] = parse_url($parts[1], PHP_URL_HOST));
+    			break;
+    	}
+    	if (count($banned['domains'])||count($banned['ips'])) {
+    		foreach($banned as $key => $bans) {
+    			if (!empty($bans)) {
+    				switch ($key) {
+    					case "domains":
+    						foreach($bans as $host) {
+    							foreach($domains as $domain) {
+    								if (strlen($domain)>=strlen($host)) {
+    									if (substr(strtolower($domain), strlen($domain) - strlen($host), strlen($host))==strtolower($host)) {
+    										if (is_object(signedLogger::getInstance()))
+    											signedLogger::getInstance()->logBannedIntrusion($type);
+    										return false;
+    									}
+    								}
+    							}
+    						}
+    						break;
+    					case "ips":
+    						foreach($bans as $address) {
+    							foreach($ips as $ip) {
+    								if (strtolower($ip)==strtolower($address)) {
+    									if (is_object(signedLogger::getInstance()))
+    										signedLogger::getInstance()->logBannedIntrusion($type);
+    									return false;
+    								}
+    							}
+    						}
+    						break;
+    				}
+    			}
+    				
+    		}
+    	}
+    	return true;
+    }
+    
+
+    /**
+     *
+     * @return array
+     */
+    function getHostCode($host = '')
+    {
+    	if (empty($host))
+    		$host = $_SERVER["HTTP_HOST"];
+    	$host = strtolower($host);
+    	return substr(md5($host), 2, 2).substr(md5($host), 12, 2).substr(md5($host), 22, 2);
+    }
+    
+    /**
+     *
+     */
+    function getSignatureCode($mode, $package = array())
+    {
+    	return $this->getHostCode().'::'.substr(signedCiphers::getInstance()->getHash(sha1(signedCiphers::getInstance()->getSalt().signedArrays::getInstance()->collapseArray($package)), 'xcp', 8), mt_rand(0,2), 4+(2-strlen(date('i')))) . date('i');
+    }
+    
+    /**
+     * Get client IP
+     *
+     * Adapted from PMA_getIp() [phpmyadmin project]
+     *
+     * @param bool $asString requiring integer or dotted string
+     * @return mixed string or integer value for the IP
+     */
+    function getIP($asString = false)
+    {
+       	// Gets the proxy ip sent by the user
+    	$proxy_ip = '';
+    	if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    		$proxy_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    	} else
+	    	if (!empty($_SERVER['HTTP_X_FORWARDED'])) {
+	    		$proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
+	    	} else
+		    	if (! empty($_SERVER['HTTP_FORWARDED_FOR'])) {
+		    		$proxy_ip = $_SERVER['HTTP_FORWARDED_FOR'];
+		    	} else
+			    	if (!empty($_SERVER['HTTP_FORWARDED'])) {
+			    		$proxy_ip = $_SERVER['HTTP_FORWARDED'];
+			    	} else
+				    	if (!empty($_SERVER['HTTP_VIA'])) {
+				    		$proxy_ip = $_SERVER['HTTP_VIA'];
+				    	} else
+					    	if (!empty($_SERVER['HTTP_X_COMING_FROM'])) {
+					    		$proxy_ip = $_SERVER['HTTP_X_COMING_FROM'];
+					    	} else
+						    	if (!empty($_SERVER['HTTP_COMING_FROM'])) {
+						    		$proxy_ip = $_SERVER['HTTP_COMING_FROM'];
+						    	}
+    	if (!empty($proxy_ip) && $is_ip = preg_match('/^([0-9]{1,3}.){3,3}[0-9]{1,3}/', $proxy_ip, $regs) && count($regs) > 0)  {
+    		$the_IP = $regs[0];
+    	} else {
+    		$the_IP = $_SERVER['REMOTE_ADDR'];
+    	}
+    
+    	$the_IP = ($asString) ? $the_IP : ip2long($the_IP);
+    
+    	return $the_IP;
+    }
+    
+}
+?>

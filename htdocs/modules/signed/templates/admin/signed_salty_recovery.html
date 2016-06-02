@@ -1,0 +1,26 @@
+<h1><{$smarty.const._SIGNED_AM_FORM_SRECOVERY_H1}></h1>
+<p><{$smarty.const._SIGNED_AM_FORM_SRECOVERY_P1}></p>
+<{foreach from=$saltys item=saltset key=indx}>
+<h2><{$indx}></h2>
+<p><{$smarty.const._SIGNED_AM_FORM_SRECOVERY_P2}></p>
+<form action="<{$xoops_url}>/modules/signed/admin/salty.php?op=exhume" method="post" >
+<input type="hidden" name="api" value="<{$indx}>" />
+<table width="100%">
+	<tr>
+		<td colspan="5" style="text-align: left;"><input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>" /> </td>
+	</tr>
+	<{foreach from=$saltset item=salt key=idey}>
+	<tr>
+		<td><input type="radio" name="key[<{$idey}>]" value="<{$idey}>" /> &nbsp; <input type="text" maxlength="12" size="10" name="pin[<{$idey}>]" value="<{$smarty.session.salty.pin}>" /></td>
+		<td><strong><{$salt.salt.name}></strong></td>
+		<td><em><{$salt.salt.email}></em></td>
+		<td><strong><em><{$salt.salt.protocol}><{$salt.salt.domain}><{$salt.salt.path}></em></strong></td>
+		<td><font style="font-size: 0.67em;<{if $salt.attempts <= 2}> font-weight: bold; color: rgb(255,10,30);<{/if}>"><{$salt.attempts}> <{$smarty.const._SIGNED_AM_FORM_ATTEMPTS}></font></td>
+	</tr>
+	<{/foreach}>
+	<tr>
+		<td colspan="5" style="text-align: right;"><input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>" /> </td>
+	</tr>
+</table>
+</form>
+<{/foreach}>
