@@ -1,0 +1,117 @@
+<?php
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		class
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+
+
+class SignedSignatures extends XoopsObject
+{
+    /**
+     *
+     */
+    function __construct()
+    {
+        $this->initVar('signid', XOBJ_DTYPE_INT, null, true);
+        $this->initVar('state', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('type', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('serial', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('bytes', XOBJ_DTYPE_INT);
+        $this->initVar('entity', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('name', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('file', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('expires', XOBJ_DTYPE_INT);
+        $this->initVar('expired', XOBJ_DTYPE_INT);
+        $this->initVar('saved', XOBJ_DTYPE_INT);
+        $this->initVar('issued', XOBJ_DTYPE_INT);
+        $this->initVar('used', XOBJ_DTYPE_INT);
+        $this->initVar('flagged', XOBJ_DTYPE_INT);
+    }
+
+    function getAdminTableItem()
+    {
+    	$result = self::getValues(array('used', 'issued', 'saved', 'expired', 'expires', 'name', 'entity', 'bytes', 'type', 'state', 'signid'));
+    	$result['kbs'] = floor($result['bytes'] / 1024);
+    	$result['whom'] = $result['entity'] . (!empty($result['entity'])?" :: ":"") . $result['name'];
+    	if ($result['issued']==0)
+    		$result['issued'] = constant("_SIGNED_AM_ISSUED_ZERO");
+    	else
+    		$result['issued'] = date('Y-m-d H:i', $result['issued']);
+    	if ($result['expired']==0)
+    		$result['expired'] = constant("_SIGNED_AM_EXPIRED_ZERO");
+    	else
+    		$result['expired'] = date('Y-m-d H:i', $result['expired']);
+    	if ($result['expires']==0)
+    		$result['expires'] = constant("_SIGNED_AM_EXPIRES_ZERO");
+    	else
+    		$result['expires'] = date('Y-m-d H:i', $result['expires']);
+    	if ($result['used']==0)
+    		$result['used'] = constant("_SIGNED_AM_EXPIRES_ZERO");
+    	else
+    		$result['used'] = date('Y-m-d H:i', $result['used']);
+    	unset($result['bytes']);
+    	unset($result['entity']);
+    	unset($result['name']);
+    	return $result;
+    }
+}
+
+/**
+ * 
+ * @author sire
+ *
+ */
+class SignedSignaturesHandler extends XoopsPersistableObjectHandler
+{
+    /**
+     * @param null|object $db
+     */
+    function __construct(&$db)
+    {
+    	if (!isset($GLOBALS['signedBoot']))
+    		$GLOBALS['signedBoot'] = microtime(true);
+        parent::__construct($db, "signed_signatures", "SignedSignatures", "signid", 'serial');
+    }
+    
+    function getAdminTabled($start = 0, $limit= 42)
+    {
+    	$criteria = new Criteria('bytes', '0', '>');
+    	$criteria->setLimit($limit);
+    	$criteria->setStart($start);
+    	$criteria->setSort('`saved`, `issued`');
+    	$criteria->setOrder('DESC');
+    	
+    	$result = array();
+    	foreach(self::getObjects($criteria, true) as $key => $object)
+    	{
+    		$result[$key] = $object->getAdminTableItem();
+    	}
+    	return $result;
+    }
+}
+

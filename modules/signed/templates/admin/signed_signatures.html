@@ -1,0 +1,39 @@
+<!-- Starting of displaying administraion for XOOPS Self Signed -->
+<!-- author: Leshy Cipherhouse <leshy@slams.io> -->
+<{if $pagenav}>
+<div style="height: 43px;">
+	<div style="float: right; width: auto;">
+		<{$pagenav}>
+	</div>
+</div>
+<{/if}>
+<table id="signatures" class="signatures">
+	<tr class="head">
+		<td><{$smarty.const._SIGNED_AM_STATE}></td>
+		<td><{$smarty.const._SIGNED_AM_TYPE}></td>
+		<td><{$smarty.const._SIGNED_AM_SERIAL}></td>
+		<td><{$smarty.const._SIGNED_AM_WHOM}></td>
+		<td><{$smarty.const._SIGNED_AM_KILOBYTES}></td>
+		<td><{$smarty.const._SIGNED_AM_USED}></td>
+		<td><{$smarty.const._SIGNED_AM_SAVED}></td>
+		<td><{$smarty.const._SIGNED_AM_ISSUED}></td>
+		<td><{$smarty.const._SIGNED_AM_EXPIRES}></td>
+		<td><{$smarty.const._SIGNED_AM_EXPIRING}></td>
+	</tr>
+	<{foreach item=signer from=$signatures}>
+	<tr class="<{cycle values='odd,even'}>">
+		<td><{$signer.state}></td>
+		<td><{$signer.type}></td>
+		<td><{$signer.serial}></td>
+		<td><{$signer.whom}></td>
+		<td><{$signer.kbs}></td>
+		<td><{$signer.used}></td>
+		<td><{$signer.saved}></td>
+		<td><{$signer.issued}></td>
+		<td><{$signer.expires}></td>
+		<td><{$signer.expired}></td>
+	</tr>
+	<{/foreach}>
+</table>
+<!-- Finishing of displaying administraion for XOOPS Self Signed -->
+<!-- XOOPS Signed version 1.11 -->

@@ -1,0 +1,391 @@
+<?php
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		mailer
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+
+xoops_load('XoopsMailer');
+
+include_once (dirname(__FILE__).'/mail/signedmultimailer.php');
+
+/**
+ * Class for sending mail.
+ *
+ * Changed to use the facilities of  {@link signedMultiMailer}
+ *
+ * @package class
+ * @subpackage mail
+ * @author Kazumi Ono <onokazu@signed.org>
+ */
+class signedMailer extends xoopsMailer
+{
+    /**
+     * reference to a {@link signedMultiMailer}
+     *
+     * @var signedMultiMailer
+     * @access private
+     * @since 21.02.2003 14:14:13
+     */
+    var $multimailer;
+    // sender email address
+    // private
+    var $fromEmail;
+    // sender name
+    // private
+    var $fromName;
+    // RMV-NOTIFY
+    // sender UID
+    // private
+    var $fromUser;
+    // array of user class objects
+    // private
+    var $toUsers;
+    // array of email addresses
+    // private
+    var $toEmails;
+    // custom headers
+    // private
+    var $headers;
+    // subjet of mail
+    // private
+    var $subject;
+    // body of mail
+    // private
+    var $body;
+    // error messages
+    // private
+    var $errors;
+    // messages upon success
+    // private
+    var $success;
+    // private
+    var $isMail;
+    // private
+    var $isPM;
+    // private
+    var $assignedTags;
+    // private
+    var $template;
+    // private
+    var $templatedir;
+    // protected
+    var $charSet = 'iso-8859-1';
+    // protected
+    var $encoding = '8bit';
+    
+    /**
+     * Constructor
+     *
+     * @return signedMailer
+     */
+    function signedMailer($from, $fromname)
+    {
+        $this->multimailer = new signedMultiMailer($from, $fromname);
+        $this->reset();
+        $this->from = $from;
+        $this->fromname = $fromname;
+        
+    }
+
+    // public     // reset all properties to default    
+	function setHTML($value = true)
+    {
+        $this->multimailer->isHTML($value);
+    }
+
+    // public
+    // reset all properties to default
+    function reset()
+    {
+        $this->fromEmail = _SIGNED_EMAIL_FROMADDR;
+        $this->fromName = _SIGNED_EMAIL_FROMNAME;
+        $this->fromUser = null; // RMV-NOTIFY
+        $this->priority = _SIGNED_EMAIL_PRIORITY;
+        $this->toUsers = array();
+        $this->toEmails = array();
+        $this->headers = array();
+        $this->subject = "";
+        $this->body = "";
+        $this->errors = array();
+        $this->success = array();
+        $this->isMail = false;
+        $this->isPM = false;
+        $this->assignedTags = array();
+        $this->template = "";
+        $this->templatedir = "";
+        // Change below to \r\n if you have problem sending mail
+        $this->LE = "\n";
+    }
+
+    // public
+    function setTemplateDir($value)
+    {
+    	$this->templatedir = $value;
+    }
+
+    // public
+    function getBodyFromTemplate($template = '', $data = array(), $htmlortext = false)
+    {
+    	$this->template = $template;
+    	
+    	$data['SITE_URL'] = _URL_ROOT;
+    	$data['SITE_EMAIL'] = _SITE_EMAIL;
+    	$data['SITE_NAME'] = _SITE_NAME;
+    	$data['SITE_COMPANY'] = _SITE_COMPANY;
+    	$data['SITE_FROM_EMAIL'] = _SITE_FROM_EMAIL;
+    	$data['SITE_FROM_NAME'] = _SITE_FROM_NAME;
+    	 
+    	if ($htmlortext==false) {
+    		if (file_exists($this->templatedir . _DS_ . 'text' . _DS_ .  $template . '.txt')) {
+    			$source = signedArrays::getFileContents($this->templatedir . _DS_ . 'text' . _DS_ . $template . '.txt');
+    			$isHMTL = false;
+    		} elseif (file_exists($this->templatedir . _DS_ . 'html' . _DS_ .  $template . '.html')) {
+    			$source = signedArrays::getFileContents($this->templatedir . _DS_ . 'html' . _DS_ . $template . '.html');
+    			$isHMTL = true;
+    		} else
+    			return false;
+    	} else {
+    		if (file_exists($this->templatedir . _DS_ . 'html' . _DS_ .  $template . '.html')) {
+    			$source = signedArrays::getFileContents($this->templatedir . _DS_ . 'html' . _DS_ . $template . '.html');
+    			$isHMTL = true;
+    		} elseif (file_exists($this->templatedir . _DS_ . 'text' . _DS_ .  $template . '.txt')) {
+    			$source = signedArrays::getFileContents($this->templatedir . _DS_ . 'text' . _DS_ . $template . '.txt');
+    			$isHMTL = false;
+    		} else
+    			return false;
+    	}
+    	if (strlen($source)>0 && !empty($data) && is_array($data)) {
+    		foreach($data as $key => $value) {
+    			$source = str_replace(array("{".strtoupper($key)."}", "{".strtolower($key)."}", "%".strtoupper($key)."%", "%".strtolower($key)."%"), $value, $source);
+    		}    		
+    	}
+    	return array('isHTML'=>$isHMTL, 'body'=> $source);
+    }
+    
+    // pupblic
+    function setFromEmail($value)
+    {
+        $this->fromEmail = trim($value);
+    }
+    
+    // public
+    function setFromName($value)
+    {
+        $this->fromName = trim($value);
+    }
+    
+    // public
+    function setPriority($value)
+    {
+        $this->priority = trim($value);
+    }
+    
+    // public
+    function setSubject($value)
+    {
+        $this->subject = trim($value);
+    }
+    
+    // public
+    function setBody($value)
+    {
+        $this->body = trim($value);
+    }
+ 
+    /**
+     * Send email
+     *
+     * Uses the new signedMultiMailer
+     *
+     * @param string $
+     * @param string $
+     * @param string $
+     * @return boolean FALSE on error.
+     */
+    
+    function sendMail($email = array(), $cc = array(), $bcc = array(),  $subject = '', $body = '', $attachments = array(), $headers = array(), $ishtml = false)
+    {
+        
+        $this->multimailer->isHTML($ishtml);
+        $this->multimailer->ClearAllRecipients();
+        if (isset($email['email']) && isset($email['name']))
+        	$this->multimailer->AddAddress($email['email'], $email['name']);
+        elseif (!empty($email) && is_array($email)) {
+        	foreach ($email as $id => $values ) {
+        		if (isset($values['email']) && isset($values['name'])) {
+        			$this->multimailer->AddAddress($values['email'], $values['name']);
+        		}
+        	}
+        }
+        if (isset($cc['email']) && isset($cc['name']))
+        	$this->multimailer->AddCC($cc['email'], $cc['name']);
+        elseif (!empty($cc) && is_array($cc)) {
+        	foreach ($cc as $id => $values ) {
+        		if (isset($values['email']) && isset($values['name'])) {
+        			$this->multimailer->AddCC($values['email'], $values['name']);
+        		}
+        	}
+        }
+        if (isset($bcc['email']) && isset($bcc['name']))
+        	$this->multimailer->AddBCC($bcc['email'], $bcc['name']);
+        elseif (!empty($bcc) && is_array($bcc)) {
+        	foreach ($bcc as $id => $values ) {
+        		if (isset($values['email']) && isset($values['name'])) {
+        			$this->multimailer->AddBCC($values['email'], $values['name']);
+        		}
+        	}
+        }
+        $this->multimailer->Subject = $subject;
+        $this->multimailer->Body = $body;
+        $this->multimailer->CharSet = $this->charSet;
+        $this->multimailer->Encoding = $this->encoding;
+
+        if (count($attachments)>0) {
+        	if (isset($attachments['source']) && isset($attachments['filename']))
+        		$this->multimailer->AddAttachment($attachments['source'], $attachments['filename']);
+        	elseif (is_array($attachments)) {
+        		foreach($attachments as $id => $values) {
+        			if (isset($values['source']) && isset($values['filename']))
+        				$this->multimailer->AddAttachment($values['source'], $values['filename']);
+        		}
+        	}
+        }
+        $this->multimailer->ClearCustomHeaders();
+        foreach($this->headers as $header) {
+            $this->multimailer->AddCustomHeader($header);
+        }
+        if (! $this->multimailer->Send()) {
+            $this->errors[] = $this->multimailer->ErrorInfo;
+            return false;
+        }
+        if (!empty($this->template) && !empty($this->templatedir)) {
+        	$types = signedProcesses::getInstance()->getEmailTemplateTypes();
+        	if (isset($types[$this->template]))
+        		$type = $types[$this->template];
+        }
+        if (!isset($type))
+        	$type = 'default';        
+        
+        return true;
+    }
+    
+    // public
+    function getErrors($ashtml = true)
+    {
+        if (! $ashtml) {
+            return $this->errors;
+        } else {
+            if (! empty($this->errors)) {
+                $ret = "<h4>" . _ERRORS . "</h4>";
+                foreach($this->errors as $error) {
+                    $ret .= $error . "<br />";
+                }
+            } else {
+                $ret = "";
+            }
+            return $ret;
+        }
+    }
+    
+    // public
+    function getSuccess($ashtml = true)
+    {
+        if (! $ashtml) {
+            return $this->success;
+        } else {
+            $ret = "";
+            if (! empty($this->success)) {
+                foreach($this->success as $suc) {
+                    $ret .= $suc . "<br />";
+                }
+            }
+            return $ret;
+        }
+    }
+    
+    // public
+    function assign($tag, $value = null)
+    {
+        if (is_array($tag)) {
+            foreach($tag as $k => $v) {
+                $this->assign($k, $v);
+            }
+        } else {
+            if (! empty($tag) && isset($value)) {
+                $tag = strtoupper(trim($tag));
+                // RMV-NOTIFY
+                // TEMPORARY FIXME: until the X_tags are all in here
+                // if ( substr($tag, 0, 2) != "X_" ) {
+                $this->assignedTags[$tag] = $value;
+                // }
+            }
+        }
+    }
+    
+    // public
+    function addHeaders($value)
+    {
+        $this->headers[] = trim($value) . $this->LE;
+    }
+    
+    // public
+    function setToEmails($email)
+    {
+        if (! is_array($email)) {
+            if (preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $email)) {
+                array_push($this->toEmails, $email);
+            }
+        } else {
+            foreach($email as $e) {
+                $this->setToEmails($e);
+            }
+        }
+    }
+   
+    // abstract
+    // to be overidden by lang specific mail class, if needed
+    function encodeFromName($text)
+    {
+        return $text;
+    }
+    
+    // abstract
+    // to be overidden by lang specific mail class, if needed
+    function encodeSubject($text)
+    {
+        return $text;
+    }
+    
+    // abstract
+    // to be overidden by lang specific mail class, if needed
+    function encodeBody(&$text)
+    {
+    }
+}
+
+?>

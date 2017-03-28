@@ -1,0 +1,72 @@
+##
+## Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+##
+## You may not change or alter any portion of this comment or credits
+## of supporting developers from this source code or any supporting source code
+## which is considered copyrighted (c) material of the original comment or credit authors.
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+##
+## @filesource
+## @copyright       	Chronolabs Cooperative http://labs.coop
+## @license         	General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+## @license		End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+## @license		Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+## @license		General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+## @category		signed
+## @since           	2.1.9
+## @version		2.2.0
+## @author          	Simon Antony Roberts <wishcraft@users.sourceforge.net>
+## @author          	Australian Passport: M8747409 <faultticket@gmail.com>
+## @ingroup		module
+## @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+## @link		Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+## @link		Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+## @link		XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+## @see			Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+##
+## ::[ DATA START ]::
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+mQGiBFOFJQYRBADHsj21MLRowWjo/BvxPWOxHVk9FloYLoam/ARjApIOj7BCjoTb
+N/OLj2SZBB4t0yOI8zUWH+Zo+/uoEM/xDPEZp4zj0TMae3b73ql1R9tmazbjtb4h
++bMnkGLHVeNVe/32CyAlLsdccsQPxniJ82KGK7iHvqdVAF+hUuCSY0mcQwCg5JRI
+O3dLkbKygtmkQu59XQqCMQUD/3o3z84t2YT5HQYXP/lQwuR8SK2O/qtlum+Cb114
+VnG3HWZ/kM4poXUPUfOQIF//sm94qHO9rXmhOlDB5BJK9/DaDs6q0ng5uJSnTapp
+lLak8ldF/4ceyR+x2SN06wYmo7U9bpH62Kh1AXe43fqvZeui3e6vuoYm7LPEUqKC
+wVTPA/wKvBnFGSt5inD/0Pv+j0NILK1iE85iAOVS7B6X0D/YP8SYc3yK43nIp0hQ
+JlRiRLwhbbVO+XkCM/BXazyO0Brd8iWM/y6ttt6v7Lw1tozr/70dDxx2MeqLt+0n
+fHl2bO9J5P0/H3HqcllSp01KPA+zAm+7EqB1A8mml3xJaSGdobQ9RGlnaXRhbCBT
+aWduYXR1cmVzIChDaHJvbm9sYWJzIFJlcG9zaXRvcnkpIDxzaWduZWRAbGFicy5j
+b29wPohnBBMRAgAoBQJThSUGAhsjBQlXsSwABgsJCAcDAgYVCAIJCgsEFgIDAQIe
+AQIXgAAKCRDAMUrPbGBpE5JTAJ9tV+2bQvHG7P+PCN60AX9Zl7LMzgCUD83z/xNO
+nXJGchdSfAdxk3HVsLkEDQRThSUGEBAArGq4KAISq5XzSZA87OLgVbUjR8ZY/tRW
+00u9I30dsDiV5qqNs6otBwCzjNpJZvEbLqTzBAOy8AwG8zU7W8a/HjuOLAhW0T73
+gRh1WjAOTrXpxSIE2tr1plyUCJyyqMTqfHDAx5dK5LOi4/38H+HhJtE/XRFIsk7V
+bqq6nlXz7+zSwBXZJRXC1YtnZthlDoFVKwr9kYolDHjCWpn6X62u5mC73EQ+U8Z0
+xiE7zabv92ROOl8c2wQWoPsykHP8at7Zw/D3KlxVSGz2aEt3YwEztshjuTEaGHq2
+mcqM0E0wRszHA6jXbXJBb/OEV8P/j1mLpduRbpEUecf/OIv5rSHtmuHjVEcvrt9Q
+v99O8W3x2HzXQ+XHvQpQLEfhpjMKs8v0G6reAVmWAwNHSYPezWFxKJaXI7CXk/xQ
+uvtfZlOnV7EtCNLkaTYv1fF0U0OfgVmcMOk3wdsPHuwfXUzmxj2i5M1XjTfZy6Gh
+Ggz3H6I0ONOn951WHKzBhAgt1smivCaP5ozPa8zTqOwpwL+JmxuaLbCmYLOhA4u1
+1nuJGBRnrWsxAnBmxWQQv5rQLxyPHpuNGyANTmsXM4h0mbZdnlBAHCdupLJMfp+1
+5UwazcSWbYTDlIuIiBe7SuNaLu4lPV0a5tXc93OJCUJHvTESBB8KDZR6pa4YnFAf
+s+iuQf4bfv8AAwUP/inBiuVHUI1/QXtgmOeP75ACLziay6XckqaqudpvOFf03M1O
+IpsfA2LiRBYRwxy/iG9Pd+ISgpCfL6HwoWoahcV/rQmSwUkXGRZUlI7qWPCMrsv1
+LsRvTCk8k25mOT9vBsOyGxUx/8xnL5pNoQ+H/g8fU/458lYxYTiZOE1Ctt6dw8y+
+Wj18TjzM1tDTek8AIiBk8Q+Oe29Px5/MF2SuEAebonJQ3Wu8QmwFEurg31ADmhIa
+vBcgBppev/SHUSOjMoH1t3evdHWAniOsgy7czs6P4R9BvAoWLf3a2AbnPiEyxHEo
+8HariDuKV/+pZQrw71R1DOS5K7GN/AmgJ6AQXvy7o/MpWy9pRxu9dOfCukjyqcg5
+NigFIhoxSy4UkAnDLehBmyUB4AQDsXM8dXuMeQlexidOdX35Ti+meToMq9OKKHpv
+j8l7Dfz5bVNdpKjQeeHP4uSkA8SexwtQTMf8FgxihAKhukYNmrK6HyKPUsU3uXx5
+Z4LBrTxz0De+jNMEBJvyY12C04tbyeNF/Atj0o4K+KNSg9QGmIXcJEYSbmQoBU3J
+9jrGO9JEfGXql5ylL39Eq7BZ4cx2PfxcJBm8XFhYoXRxeTZioXB8nPp7uFJEYkWf
+71jlTlEhVqCOgukdqRMQ/P8+sYd7T0pMtrQM/pV7BK/wfSWPPOGJAEsgv3hoiE8E
+GBECAA8FAlOFJQYCGwwFCVexLAAACgkQwDFKz2xgaRMWwQCfeBlzZH2CqGHu3C14
+C8Gz8t07u1IAn3QHM7u3KjNe56hJVwYYw4vIVq5K
+=oc2v
+-----END PGP PUBLIC KEY BLOCK-----
+## ::[ DATA END ]::
+## SEALED BY: Simon Antony Roberts (M8747409) - 14 Aug 2015 2219 AEST

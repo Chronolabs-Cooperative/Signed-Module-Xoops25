@@ -1,0 +1,10 @@
+To {TO_EMAIL},
+
+The person/individual {PERSON_FOR} has asked us {PERSON_BY} to create a digital signature for them. Your email address was provided and needs to be verified in order for us to generate a Digital Signature.
+
+You will need to click on the following link to ensure your email address is verified to generate the Digital Signature: {VERIFY_URL}
+
+Many thanks,
+
+{SITE_COMPANY}
+{SITE_URL}	

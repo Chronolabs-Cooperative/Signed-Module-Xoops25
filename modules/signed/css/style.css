@@ -1,0 +1,317 @@
+@CHARSET "ISO-8859-1";
+
+@import url(https://fonts.ringwould.com.au/v1/random/black-bold/Signed-Header-Alpha/css.api);
+@import url(https://fonts.ringwould.com.au/v1/random/semibold-bold/Signed-Header-Omega/css.api);
+@import url(https://fonts.ringwould.com.au/v1/random/normal-regular-ctt-btt-bbt-cc-bb-bt/Signed-Content/css.api);
+@import url(https://fonts.ringwould.com.au/v1/random/normal-regular/Signed-Fields/css.api);
+@import url(https://fonts.ringwould.com.au/v1/random/condensed/Signed-Bullets/css.api);
+@import url(https://fonts.ringwould.com.au/v1/random/italic/Signed-Footer/css.api);
+@import url(https://fonts.ringwould.com.au/v1/random/courier-terminal-shell/Signed-API-Examples/css.api);
+
+#signed #canvas, #signed .canvas {
+	margin: 12px 12px 12px 12px;
+	font-size: 0.7811em;
+	font-family: 'Signed Content';
+	min-height: 101%;
+}
+
+#signed #system-title {
+	font-size: 5.6666em;
+	font-family: 'Signed Header Alpha';
+	color: rgb(159,89,139);
+	margin: 10px auto;
+	text-align: center;
+	text-shadow: 7px 7px 5px rgba(190, 190, 169, 0.89);
+	margin-bottom: 47px;
+	margin-top: 28px;
+	text-align: center;
+}
+
+#signed #button, #signed .button, #signed input[type=submit], #signed input[type=button] {
+	font-size: 1.21831em;	text-align: justify;	font-family: 'Signed Fields';	margin: 0px auto;	padding: 7px 7px 7px 7px;	border: 4px #fff solid;	background: #cb60b3; /* Old browsers */	/* IE9 SVG, needs conditional override of 'filter' to 'none' */	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjY2I2MGIzIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjYzE0NmExIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNTElIiBzdG9wLWNvbG9yPSIjYTgwMDc3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RiMzZhNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);	background: -moz-linear-gradient(-45deg, #cb60b3 0%, #c146a1 50%, #a80077 51%, #db36a4 100%); /* FF3.6+ */	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#cb60b3), color-stop(50%,#c146a1), color-stop(51%,#a80077), color-stop(100%,#db36a4)); /* Chrome,Safari4+ */	background: -webkit-linear-gradient(-45deg, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* Chrome10+,Safari5.1+ */	background: -o-linear-gradient(-45deg, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* Opera 11.10+ */	background: -ms-linear-gradient(-45deg, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* IE10+ */	background: linear-gradient(135deg, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* W3C */	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cb60b3', endColorstr='#db36a4',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */	-webkit-box-shadow: 4px 4px 6px 2px rgba(195, 195, 195, 1);	-moz-box-shadow:    4px 4px 6px 2px rgba(195, 195, 195, 1); 	box-shadow:         4px 4px 6px 2px rgba(195, 195, 195, 1);	-webkit-border-radius: 14px;	-moz-border-radius: 14px;	border-radius: 14px;	text-shadow: 2px 2px 2px rgba(103, 87, 101, 0.82);	color: #fff;	/* Theoretically for IE 8 & 9 (more valid) */		/* ...but not required as filter works too */	/* should come BEFORE filter */	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=87)";	/* This works in IE 8 & 9 too */	/* ... but also 5, 6, 7 */	filter: alpha(opacity=87);	/* Older than Firefox 0.9 */	-moz-opacity:0.87;	/* Safari 1.x (pre WebKit!) */	-khtml-opacity: 0.87;	/* Modern!	/* Firefox 0.9+, Safari 2?, Chrome any?	/* Opera 9+, IE 9+ */	opacity: 0.87;
+	margin-bottom: 19px;}
+
+#signed #errors {
+	text-align: justify;
+	font-family: 'Signed Header Omega';
+	margin: 15px auto;
+	margin-top: 9px;
+	width: 78%;
+	padding: 25px 25px 25px 25px;
+	border: 4px #fff solid;
+	background: #cb60b3; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjY2I2MGIzIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjYzE0NmExIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNTElIiBzdG9wLWNvbG9yPSIjYTgwMDc3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RiMzZhNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+	background: -moz-linear-gradient(-45deg, #cb60b3 0%, #c146a1 50%, #a80077 51%, #db36a4 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#cb60b3), color-stop(50%,#c146a1), color-stop(51%,#a80077), color-stop(100%,#db36a4)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(-45deg, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(-45deg, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(-45deg, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* IE10+ */
+	background: linear-gradient(135deg, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cb60b3', endColorstr='#db36a4',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+	-webkit-box-shadow: 4px 4px 6px 2px rgba(195, 195, 195, 1);
+	-moz-box-shadow:    4px 4px 6px 2px rgba(195, 195, 195, 1);
+	box-shadow:         4px 4px 6px 2px rgba(195, 195, 195, 1);
+	-webkit-border-radius: 14px;
+	-moz-border-radius: 14px;
+	border-radius: 14px;
+	text-shadow: 2px 2px 2px rgba(103, 87, 101, 0.82);
+	color: #fff;
+		/* Theoretically for IE 8 & 9 (more valid) */	
+	/* ...but not required as filter works too */
+	/* should come BEFORE filter */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=87)";
+	
+	/* This works in IE 8 & 9 too */
+	/* ... but also 5, 6, 7 */
+	filter: alpha(opacity=87);
+	
+	/* Older than Firefox 0.9 */
+	-moz-opacity:0.87;
+	
+	/* Safari 1.x (pre WebKit!) */
+	-khtml-opacity: 0.87;
+    
+	/* Modern!
+	/* Firefox 0.9+, Safari 2?, Chrome any?
+	/* Opera 9+, IE 9+ */
+	opacity: 0.87;
+}
+
+#signed #footer {
+	text-align: center;
+	font-family: 'Signed Footer';
+	margin: 15px auto;
+	width: 78%;
+	margin-top: 19px;
+	padding: 15px 15px 15px 15px;
+	border: 4px #fff solid;
+	color: #effede;
+	font-size: 0.78em;
+	text-align: center;
+	margin-top: 29px;
+	-webkit-box-shadow: 4px 4px 6px 2px rgba(195, 195, 195, 1);
+	-moz-box-shadow:    4px 4px 6px 2px rgba(195, 195, 195, 1);
+	box-shadow:         4px 4px 6px 2px rgba(195, 195, 195, 1);
+	-webkit-border-radius: 14px;
+	-moz-border-radius: 14px;
+	border-radius: 14px;
+	text-shadow: 2px 2px 2px rgba(250, 250, 250, 0.82);
+	background: rgb(149,149,149); /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzk1OTU5NSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQ2JSIgc3RvcC1jb2xvcj0iIzBkMGQwZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAxMDEwMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUzJSIgc3RvcC1jb2xvcj0iIzBhMGEwYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijc2JSIgc3RvcC1jb2xvcj0iIzRlNGU0ZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijg3JSIgc3RvcC1jb2xvcj0iIzM4MzgzOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxYjFiMWIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(left, rgb(149,149,149) 0%, rgb(13,13,13) 46%, rgb(1,1,1) 50%, rgb(10,10,10) 53%, rgb(78,78,78) 76%, rgb(56,56,56) 87%, rgb(27,27,27) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgb(149,149,149)), color-stop(46%,rgb(13,13,13)), color-stop(50%,rgb(1,1,1)), color-stop(53%,rgb(10,10,10)), color-stop(76%,rgb(78,78,78)), color-stop(87%,rgb(56,56,56)), color-stop(100%,rgb(27,27,27))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left, rgb(149,149,149) 0%,rgb(13,13,13) 46%,rgb(1,1,1) 50%,rgb(10,10,10) 53%,rgb(78,78,78) 76%,rgb(56,56,56) 87%,rgb(27,27,27) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left, rgb(149,149,149) 0%,rgb(13,13,13) 46%,rgb(1,1,1) 50%,rgb(10,10,10) 53%,rgb(78,78,78) 76%,rgb(56,56,56) 87%,rgb(27,27,27) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left, rgb(149,149,149) 0%,rgb(13,13,13) 46%,rgb(1,1,1) 50%,rgb(10,10,10) 53%,rgb(78,78,78) 76%,rgb(56,56,56) 87%,rgb(27,27,27) 100%); /* IE10+ */
+	background: linear-gradient(to right, rgb(149,149,149) 0%,rgb(13,13,13) 46%,rgb(1,1,1) 50%,rgb(10,10,10) 53%,rgb(78,78,78) 76%,rgb(56,56,56) 87%,rgb(27,27,27) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', endColorstr='#1b1b1b',GradientType=1 ); /* IE6-8 */
+}
+
+#signed #apihelp {
+	font-size: 89.3666%;
+	width: 93%;
+	margin: 15px auto;
+	text-align: justify;
+	font-family: 'Signed Footer';
+	margin-top: 19px;
+	padding: 15px 15px 15px 15px;
+	border: 4px #fff solid;
+	color: #486718;
+	font-size: 1.08em;
+	-webkit-box-shadow: 4px 4px 6px 2px rgba(195, 195, 195, 1);
+	-moz-box-shadow:    4px 4px 6px 2px rgba(195, 195, 195, 1);
+	box-shadow:         4px 4px 6px 2px rgba(195, 195, 195, 1);
+	-webkit-border-radius: 14px;
+	-moz-border-radius: 14px;
+	border-radius: 14px;
+	text-shadow: 2px 2px 2px rgba(250, 250, 250, 0.82);
+	background: #eaefb5; /* Old browsers */
+	background: -moz-linear-gradient(top, #eaefb5 0%, #e1e9a0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaefb5), color-stop(100%,#e1e9a0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #eaefb5 0%,#e1e9a0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #eaefb5 0%,#e1e9a0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #eaefb5 0%,#e1e9a0 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #eaefb5 0%,#e1e9a0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaefb5', endColorstr='#e1e9a0',GradientType=0 ); /* IE6-9 */
+}
+
+#signed-canvas-footer
+{
+	margin-top: 25px;
+	font-size: 0.89em;
+	font-weight: 600;
+	color: rgb(20, 230, 23);
+	font-family: 'Signed Footer', 'Courier New', 'Courier', 'Terminal';
+	text-shadow: 2px 2px 2px rgba(132, 187, 55, 0.82);
+}
+
+#signed #canvas {
+	text-align: justify;
+	font-family: 'Signed Content';
+	margin: 15px auto;
+	width: 78%;
+	padding: 25px 25px 25px 25px;
+	border: 4px #fff solid;
+	background: #ff3019; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: #a90329; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMTAwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYTkwMzI5IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNDQlIiBzdG9wLWNvbG9yPSIjOGYwMjIyIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzZkMDAxOSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+	background: -moz-linear-gradient(45deg, #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#6d0019)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(45deg, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(45deg, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(45deg, #a90329 0%,#8f0222 44%,#6d0019 100%); /* IE10+ */
+	background: linear-gradient(45deg, #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+	-webkit-box-shadow: 4px 4px 6px 2px rgba(195, 195, 195, 1);
+	-moz-box-shadow:    4px 4px 6px 2px rgba(195, 195, 195, 1);
+	box-shadow:         4px 4px 6px 2px rgba(195, 195, 195, 1);
+	-webkit-border-radius: 14px;
+	-moz-border-radius: 14px;
+	border-radius: 14px;
+	text-shadow: 2px 2px 2px rgba(103, 87, 101, 0.82);
+	color: #fff;
+		/* Theoretically for IE 8 & 9 (more valid) */	
+	/* ...but not required as filter works too */
+	/* should come BEFORE filter */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=87)";
+	
+	/* This works in IE 8 & 9 too */
+	/* ... but also 5, 6, 7 */
+	filter: alpha(opacity=87);
+	
+	/* Older than Firefox 0.9 */
+	-moz-opacity:0.87;
+	
+	/* Safari 1.x (pre WebKit!) */
+	-khtml-opacity: 0.87;
+    
+	/* Modern!
+	/* Firefox 0.9+, Safari 2?, Chrome any?
+	/* Opera 9+, IE 9+ */
+	opacity: 0.87;
+}
+
+#signed p {
+	margin: 10px 27px 6px 29px;
+}
+
+#signed blockquote {
+	margin: auto 57px;
+	font-family: "Signed Api Examples", "Courier New", "Courier", "Terminal";
+	text-align: center;
+	border: 4px #000 dash;
+	background: #fff; /* Old browsers */
+	padding: 17px;	
+	color: #000;
+	-webkit-box-shadow: 3px 3px 4px 0px rgba(25, 25, 25, 1);
+	-moz-box-shadow:    3px 3px 4px 0px rgba(25, 25, 25, 1);
+	box-shadow:         3px 3px 4px 0px rgba(25, 25, 25, 1);
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	margin-bottom: 23px;
+}
+
+#signed input, #signed textarea, #signed select {
+	font-family: 'Eras Medium';
+	font-size: 0.983457863em;
+	-webkit-box-shadow: 2px 2px 3px 0px rgba(5, 5, 5, 1);
+	-moz-box-shadow:    2px 2px 3px 0px rgba(5, 5, 5, 1);
+	box-shadow:         2px 2px 3px 0px rgba(5, 5, 5, 1);
+}
+
+#signed input[type=text], #signed textarea, #signed select {
+	/* Theoretically for IE 8 & 9 (more valid) */	
+	/* ...but not required as filter works too */
+	/* should come BEFORE filter */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=76)";
+	
+	/* This works in IE 8 & 9 too */
+	/* ... but also 5, 6, 7 */
+	filter: alpha(opacity=76);
+	
+	/* Older than Firefox 0.9 */
+	-moz-opacity:0.76;
+	
+	/* Safari 1.x (pre WebKit!) */
+	-khtml-opacity: 0.76;
+    
+	/* Modern!
+	/* Firefox 0.9+, Safari 2?, Chrome any?
+	/* Opera 9+, IE 9+ */
+	opacity: 0.76;
+	font-size: 0.983457863em;
+	font-family: "Signed Fields";
+}
+
+#signed label, #signed li {
+	font-family: "Signed Bullets";
+	font-size: 0.983457863em;
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.82);
+}
+
+/* ===== tables and cells ===== */
+#outer, .outer {border: 7px #212121 solid;	
+	margin: auto; 
+	width:68%; 
+	padding 2px; 
+	}
+
+#signed table { 
+	width: 100%;
+	-webkit-box-shadow: 4px 4px 6px 2px rgba(195, 195, 195, 1);
+	-moz-box-shadow:    4px 4px 6px 2px rgba(195, 195, 195, 1);
+	box-shadow:         4px 4px 6px 2px rgba(195, 195, 195, 1);
+	text-shadow: 2px 2px 2px rgba(250, 250, 250, 0.82);
+	background: rgb(149,149,149); /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzk1OTU5NSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQ2JSIgc3RvcC1jb2xvcj0iIzBkMGQwZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAxMDEwMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUzJSIgc3RvcC1jb2xvcj0iIzBhMGEwYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijc2JSIgc3RvcC1jb2xvcj0iIzRlNGU0ZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijg3JSIgc3RvcC1jb2xvcj0iIzM4MzgzOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxYjFiMWIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(left, rgb(149,149,149) 0%, rgb(13,13,13) 46%, rgb(1,1,1) 50%, rgb(10,10,10) 53%, rgb(78,78,78) 76%, rgb(56,56,56) 87%, rgb(27,27,27) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgb(149,149,149)), color-stop(46%,rgb(13,13,13)), color-stop(50%,rgb(1,1,1)), color-stop(53%,rgb(10,10,10)), color-stop(76%,rgb(78,78,78)), color-stop(87%,rgb(56,56,56)), color-stop(100%,rgb(27,27,27))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left, rgb(149,149,149) 0%,rgb(13,13,13) 46%,rgb(1,1,1) 50%,rgb(10,10,10) 53%,rgb(78,78,78) 76%,rgb(56,56,56) 87%,rgb(27,27,27) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left, rgb(149,149,149) 0%,rgb(13,13,13) 46%,rgb(1,1,1) 50%,rgb(10,10,10) 53%,rgb(78,78,78) 76%,rgb(56,56,56) 87%,rgb(27,27,27) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left, rgb(149,149,149) 0%,rgb(13,13,13) 46%,rgb(1,1,1) 50%,rgb(10,10,10) 53%,rgb(78,78,78) 76%,rgb(56,56,56) 87%,rgb(27,27,27) 100%); /* IE10+ */
+	background: linear-gradient(to right, rgb(149,149,149) 0%,rgb(13,13,13) 46%,rgb(1,1,1) 50%,rgb(10,10,10) 53%,rgb(78,78,78) 76%,rgb(56,56,56) 87%,rgb(27,27,27) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', endColorstr='#1b1b1b',GradientType=1 ); /* IE6-8 */
+	color: #010101;
+}
+
+#signed caption { font-style: italic; font-weight: bold; font-family: "Signed Footer";}
+
+#signed th, #signed thead {
+	background-color: 			#F4F9FE;
+	padding : 					2px;
+	color: 						#3390EF;
+	font-size:					1.76855em;
+	font-weight:				bold;
+	text-align: 				center;
+	vertical-align : 			middle;
+	padding:					6px;
+}
+#signed tfoot, #signed .foot {
+	background-color:			#f7fbff;
+	padding: 					5px;
+	color: 						inherit;
+	font-weight: 				bold;
+}
+#signed tbody {}
+#signed table.outer { border-collapse: separate; border: 1px solid #ddd;}
+#signed table td {
+	padding: 					5px;
+	vertical-align: 			top;
+}
+
+#signed li
+{
+	font-size: 145%;
+	width: 80% !important;
+	padding: 0px !important;
+	margin-top: 5px !important;
+	margin-left: 19px !important;
+	margin-bottom: 3px !important;
+}
+}

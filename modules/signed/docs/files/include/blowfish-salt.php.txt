@@ -1,0 +1,43 @@
+<?php
+/**
+* Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+*
+* You may not change or alter any portion of this comment or credits
+* of supporting developers from this source code or any supporting source code
+* which is considered copyrighted (c) material of the original comment or credit authors.
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* @copyright       Chronolabs Cooperative http://labs.coop
+* @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+* @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+* @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+* @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+* @category		signed
+* @since			2.1.9
+* @version			2.2.0
+* @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+* @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+* @subpackage		cryptographic
+* @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+* @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+* @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+* @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+* @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+* @filesource
+*
+*/
+/*
+* When the Blowfish salt was set unixtime()
+*/
+define("SIGNED_BLOWFISH_WHEN", "1439563903.912283897");
+/*
+* The Blowfish salt is as
+*/
+define("SIGNED_BLOWFISH_SALT", "xztzl`gdOmM|bdqeNVwy|wtL\?J}<kCZUvJiM_IpJEDYaÅe`^qTZ}?Mgnv@dCZUWlP{[Kgjcgll^JfcOrkA\tP?^K^zJR;GÄ|BF\s=SKSW=@W=<@{LhmÄbS^XQI{GUmk<PEtÄkÅfcI=q`fddpYXzEn\;^bys>z=|;9~udQTR}O<yLSIlfkÅ{J_j~~ZHl@dwgNCtIr@g[q_=lxsNuSl{MfYkvofLySc^~tFKqsnejGr]FVpkÄOiPAU[dkETw_aLQwcPBYIRÄ>YjHZEt}m]]Mf@~|wPo@o9EE||sIpUV]@r}}?IijQB_\lIUd{^sm|rÅL;bfXdu~~=OAÅ_Nl{d:gYg_CfEJÅvU{wsÄa\DNbÄbWnNyhs9iG~kXdKp_~SWMxkCj<gvm`MNjh:~TyjuQvGF~YKoKlaQfU~TS`{wEL>PBm=@y}v?rHfWB~J_}ILCsTAyÅUzH\~^S]XAamO]>owoÄsKeD<H:@l9kyd~ZO<rJGi[DLLqiwxx:[cEptIeqaz}S=ZZPB9uvyyioDDu|OTQjcu=<ORJiaE<pYlFPPjakCZIp^ÄC_izj@z_fMovQZ}k@q>:F\]lJ]kbO<jP[\\|{UeQpb\sr~\eGk]_<IL^l|\Jn;BxCUtd<MFQuq}:l[c][N\hFzlOAuggUZ:Drh_siE\^cAXr}_XYQuzA?Z_etk\~uZmbtdUrK`c`KIc|o?<hcTuv=~:C<;|r?MQT_iS||nDDRe>>YV{DJNozMesFFMh]jdfpOwo=rkrjeBcSG9SPp{jCR\SclJLcZ?o]BvbsH>dLmO}B]TXCSCXrOxBJ{vtwqbÄ@}rxR;ÅMopH`rseHb?Ww<k<Y9p~u?T}j^Q?VcQ>OK:rU^FÄrPZw]?_[>v_?I|z>yle=qV]hU<~ÅqPRJ{SK|`]gN<p<W:WrV^GdFhwLwBKDA[F|<=ho[aLGhG~uJb<WUjfe=u_oSrvÅ{s]P<bDprWm\XqmIMH_gA||uWZli?~?jGpyj@ITV>?Cu9xY[LPdQ[?obJ{AWmEw@^\^zM~~F[PIgMdh;Q:\<];uwu9ePyXI|ws\=}]@}bSt^O>WjU`ye;TfÄ;]=OILUQphmFi<{;rUFAlbCg[rO@?ya~Qnp9Åts=>Dr<P9K?wxÄ`Q\ÅF}Zeyz<B_p;kDp;]\];KpbÄ@we{hE;qpaGzWHj?=uNCLcl`\}aMmC@hZAnpÄE{sliZ{QVdLdÄ`bT|??Ä\]bÅq9PWnm9PLO:Uao_PVÅfG>9w}dRHLawVRÄp?Y|b_=A@xm;Fff;DlPlHdBXbcaI=C{KYq^^Kqfxgl^WMg[G=:gB^LkvLPj;ALtEP~WmÄt^DG`dZ[pdczEÄ<fcqchI}x?Pd\Aw=:|>]WQQvY[iGkcZRNvI_Ude>fofQyQU]}~``sxMYjH@EnÅG[ZVT?HcR\;PSPmqHYJZbi|XkUNhHeRyn<ix[N<\fuRÅyAMvy@Cm?sEJ<t{PWfD_Yt=rfo@>NbG:~Njd`KK`OEK9MVDnTQyco[ro=^`mvoLsukKAsDayf|O={\lAnJX:zUOdw=b`;fy]T[Bp:cjpWi^>umYlYePlUGVVdvvxpASb_N?IUE=yEM<J_nKdUoe?|u_Un<_\euq^HKXu=Q>|u<_CbdXzvgRs?ZpKQHr:cn^bUAMÅjx;g_uX\R]U@OJ]MGVbRCgCO{F[huecKbxNQ[|YÄvBgYxnqKC<:T]vt[kq\pzoj]udK^rOVc{:e@VWGzeUlYLnaYVhf]SH`a:xQ>{@W^;ybWDEIYpfs@GLABSzTZCPA\}Us<bJEZ`p`yN`DxJI\<Q?t~ceRqVÅccBAodhq<MHtem~VaDWAhP=RhXjYj=wc:bI");
+/*
+* When HOST Code when the Blowfish salt was set
+*/
+define("SIGNED_BLOWFISH_HOST", "http://au.syd.labs.coop");
+?>

@@ -1,0 +1,104 @@
+<?php 
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		templates
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+?><?php $GLOBALS['pagetitle'] = _CONTENT_HELP_PERSONAL_INTRO_PT; ?>
+<?php 
+	$classes = signedArrays::getInstance()->returnKeyed(basename(dirname(__FILE__)), 'getClassArray');
+?>
+<div style="margin-bottom:85px;">
+	<p style="font-size: 1.35em;"><?php echo _CONTENT_HELP_PERSONAL_INTRO_P1; ?></p>
+	<h1><?php echo _CONTENT_HELP_PERSONAL_INTRO_H1A; ?></h1>
+	<p style="font-size: 1.15em;"><?php echo _CONTENT_HELP_PERSONAL_INTRO_P2; ?></p>
+		<ol>
+			<?php
+				foreach(signedArrays::getInstance()->returnKeyed('personal', 'getFieldsArray') as $field => $values) {
+					if (isset($values['required']) && $values['required']==true) {
+		?>		<li><?php echo sprintf(_CONTENT_HELP_PERSONAL_INTRO_LIA, $values['title'], ucwords($values['type'])); ?></li>
+		<?php 
+					}
+				}?>	
+		</ol>
+	</p>
+	<h1><?php echo _CONTENT_HELP_PERSONAL_INTRO_H1B; ?></h1>
+	<p style="font-size: 1.15em;"><?php echo _CONTENT_HELP_PERSONAL_INTRO_P3; ?>
+		<ol>
+			<?php foreach(signedArrays::getInstance()->returnKeyed('entity', 'getIdentificationsArray') as $key => $values) {
+	?>		<li><?php echo  sprintf(_CONTENT_HELP_PERSONAL_INTRO_LIB, $values['title'], ucwords($values['points'])); ?></li>
+	<?php 
+			}?>	
+		</ol>
+	</p>
+	<p style="font-size: 1.59999em;">
+		<center>
+			<?php echo _CONTENT_HELP_PERSONAL_INTRO_P5; ?>
+			<br/>
+			<img src="<?php echo _URL_IMAGES; ?>/watermark.gif"/>
+		</center>
+	</p>
+	<form name="entity-introductions" method="post" action="<?php echo _URL_ROOT; ?>/=generator=/">
+	<h1><?php echo _CONTENT_HELP_PERSONAL_INTRO_H1C; ?></h1>
+	<p style="font-size: 1.15em;"><?php echo _CONTENT_HELP_PERSONAL_INTRO_P4; ?></p>
+	<div style="margins:12px auto; width:69%;">
+		<div style="float:left; clear: none; width:49%;">
+			Years: <input type="text" size="10" maxlen="10" value="" name="expires[years]" id="expires-years" onchange="javascript:ValidateLengthOperations('entity-introductions')" />
+		</div>
+		<div style="float:left; clear: none; width:49%;">
+			Months: <input type="text" size="10" maxlen="10" value="" name="expires[months]" id="expires-months" onchange="javascript:ValidateLengthOperations('entity-introductions')" />
+		</div>
+		<input type="hidden" name="fields-required[]" value="expires">
+		<input type="hidden" name="fields[]" value="expires">
+	</div>
+	<?php if (count($classes)>1) { 
+?><div style="margin-top: 19px;">
+	<h1><?php echo _CONTENT_HELP_PERSONAL_INTRO_H1D; ?></h1>
+	<select name="class" id="signature-class">
+	<?php foreach($classes as $key => $value) { ?>
+		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+	<?php }?>
+	</select>
+</div>
+<?php 	
+} else {
+	$classkeys = array_keys($classes);
+	?><input type="hidden" name="class" value="<?php echo $classes[$classkeys[0]]; ?>"><?php 
+} ?>
+	<input type="hidden" name="fields-required[]" value="class">
+	<input type="hidden" name="fields[]" value="class">
+</div>
+<div style="width:100%; height: 15px;">&nbsp;</div>
+	<div style="position: relative; top: -24px;">
+		<div style="float: left; width: 25%; clear: none;">
+			<input type="hidden" name="prompt" value="<?php echo $_SESSION["signed"]['action']; ?>">
+			<input type="hidden" name="step" value="<?php echo $_SESSION["signed"]['step']; ?>">
+			<input type="submit" name="submit" value="<?php echo _CONTENT_BUTTON_NEXT; ?>">
+		</form>
+	</div>
+</div>
+

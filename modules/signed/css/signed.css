@@ -1,0 +1,16 @@
+/* $Id: signed.css 9599 2012-05-29 12:24:59Z beckmi $ */
+
+/*=== FORMAT BASIC ELEMENTS, can be overwritten in theme styles ===*/
+
+/* For required elements in signed form */
+.signed-form-element-caption .caption-marker { display: none;}
+.signed-form-element-caption-required .caption-marker {
+	background-color:   inherit;
+	padding-left: 	    2px;
+	color: 			    #ff0000;
+}
+.signed-form-element-help {
+	font-size:		    .9em;
+    padding-top:        5px;
+    font-weight:        normal;
+}

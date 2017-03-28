@@ -1,0 +1,1 @@
+[15-Aug-2015 01:50:32 Australia/Sydney] PHP Fatal error:  Call to undefined function xoops_gethandler() in /var/www/coop/labs/web/modules/signed/include/common.php on line 42

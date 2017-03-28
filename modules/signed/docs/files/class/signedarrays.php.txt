@@ -1,0 +1,210 @@
+<?php
+/**
+ * Chronolabs Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       Chronolabs Cooperative http://labs.coop
+ * @license			General Software Licence (http://labs.coop/briefs/legal/general-software-license/10,3.html)
+ * @license			End User License (http://labs.coop/briefs/legal/end-user-license/11,3.html)
+ * @license			Privacy and Mooching Policy (http://labs.coop/briefs/legal/privacy-and-mooching-policy/22,3.html)
+ * @license			General Public Licence 3 (http://labs.coop/briefs/legal/general-public-licence/13,3.html)
+ * @category		signed
+ * @since			2.1.9
+ * @version			2.2.0
+ * @author			Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @author          Simon Antony Roberts (Aus Passport: M8747409) <wishcraft@users.sourceforge.net>
+ * @subpackage		class
+ * @description		Digital Signature Generation & API Services (Psuedo-legal correct binding measure)
+ * @link			Farming Digital Fingerprint Signatures: https://signed.ringwould.com.au
+ * @link			Heavy Hash-info Digital Fingerprint Signature: http://signed.hempembassy.net
+ * @link			XOOPS SVN: https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/signed/
+ * @see				Release Article: http://cipher.labs.coop/portfolio/signed-identification-validations-and-signer-for-xoops/
+ * @filesource
+ *
+ */
+
+
+class signedArrays 
+{
+
+	/**
+	 *
+	 */
+	function __construct()
+	{
+	
+	}
+	
+	/**
+	 *
+	 */
+	function __destruct()
+	{
+	
+	}
+	
+	/**
+	 *
+	 * @return Ambigous <NULL, signedProcessess>
+	 */
+	static function getInstance()
+	{
+		ini_set('display_errors', true);
+		error_reporting(E_ERROR);
+		
+		static $object = NULL;
+		if (!is_object($object))
+			$object = new signedArrays();
+		return $object;
+	}
+
+	/**
+	 * Loads a file as an array skipping commenting
+	 * 
+	 * @param string $filename
+	 * 
+	 * @return array
+	 */
+	static function getFile($filename = '')
+	{
+		$ret = array();
+		if (file_exists($filename))
+		{
+			foreach(file($filename) as $line => $value)
+			{
+				if (substr(trim($value), 0, 2)!="##" && !strpos(' '.$value, "##") && strlen(trim($value))>0)
+				{
+					while(substr($value, strlen($value)-1, 1) == "\r")
+						$value = substr($value, 0, strlen($value)-1);
+					while(substr($value, strlen($value)-1, 1) == "\n")
+						$value = substr($value, 0, strlen($value)-1);
+					while(substr($value, strlen($value)-1, 1) == "\r")
+						$value = substr($value, 0, strlen($value)-1);
+					if (intval(trim($value))!=0 || !is_numeric($value))
+						$ret[] = trim($value);
+				}
+			}
+		}
+		return $ret;
+	}
+	
+	
+	/**
+	 * Loads a file as an array skipping commenting
+	 *
+	 * @param string $filename
+	 *
+	 * @return array
+	 */
+	static function getFileContents($filename = '')
+	{
+		return implode("\n", self::getFile($filename));
+	}
+
+	/**
+	 *
+	 */
+	function makeAlphaCount($num = 0)
+	{
+		static $ret = array();
+		if (!isset($ret[$num])) {
+			$ret[$num] = 'aaaaaaaaaa';
+			for($i=0;$i<$num;$i++)
+				$ret[$num]++;
+				$ret[$num]++;
+				$ret[$num] = 'n'+$num+'-' . $ret[$num];
+		}
+		return $ret[$num];
+	}
+
+	/**
+	 * 
+	 * @param number $key
+	 * @return string|number
+	 */
+	function reverseAlphaCount($key = 0)
+	{
+		if (substr($key,0,1)==='n' && strpos($key, '-'))
+		{
+			$parts = explode('-', $key);
+			return substr($parts[0], 1, strlen($parts[0])-1);
+		}
+		return $key;
+	}
+	
+	/**
+	 *
+	 */
+	function collapseArray($array = array())
+	{
+		return json_encode($array);
+	}
+	
+	/**
+	 *
+	 * @return array
+	 */
+	function returnKeyed($key = '', $function = "", $class = '')
+	{
+	
+		if (empty($class)) {
+			foreach(get_declared_classes() as $classname) {
+				if (method_exists($classname, $function)) {
+					$class = $classname;
+					continue;
+				}
+			}
+		}
+		if (method_exists($class, $function)) {
+			if (method_exists($class, 'getInstance')) {
+				$object = $class::getInstance();
+			} else {
+				$object = new $class();
+			}
+			$data = $object->$function();
+			if (isset($data[$key]))
+				return $data[$key];
+			else
+				return $data;
+		} elseif (function_exists($function)) {
+			return $function();
+		}
+		return false;
+	}
+	
+	
+	/**
+	 *
+	 * @return array
+	 */
+	function returnKey($key = '', $function = "", $class = '')
+	{
+		return returnKeyed($key, $function, $class);
+	}
+	
+	/**
+	 * 
+	 * @param unknown $array
+	 * @return mixed
+	 */
+	function trimExplode($array = array()) {
+		static $arrays = array();
+		if (!isset($arrays[md5(self::collapseArray($array))]))
+		{
+			$arrays[md5(self::collapseArray($array))] = array();
+			foreach($array as $key => $value) {
+				if (is_array($value))
+					$arrays[md5(self::collapseArray($array))][$key] = $this->trimExplode($value);
+				else
+					$arrays[md5(self::collapseArray($array))][$key] = str_replace(array("\n", "\r"), "", trim($value));
+			}
+		}
+		return $arrays[md5(self::collapseArray($array))];
+	}
+}

@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+
+	RewriteEngine On
+	RewriteRule ^=([a-zA-Z0-9]+)=/ $1.php
+	RewriteRule ^=([a-zA-Z0-9]+)=/finished/([a-zA-Z0-9]+).(.*?)$ $1.php?op=finished&serial=$2
+	RewriteRule ^=([a-zA-Z0-9]+)=/index(.*?)?(.*?)$ $1.php?$3
+	RewriteRule ^=([a-zA-Z0-9]+)=/index(.*?)$ $1.php
+	RewriteRule ^=([a-zA-Z0-9]+)=/?(.*?)$ $1.php?$2
+	
+</IfModule>
