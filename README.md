@@ -20,4 +20,21 @@ Which once you have establised a xoops_data/signed you will not be able to move 
 Signatures from start, these are also encrypted if you turn it on with the new cryptus class with the
 module. 
 
-.. more to come ..
+Signed 2.21 is the final realease of the digital signature framework for XOOPS, it allows your clients
+to generate online signatures that can be validated by the signer from your signee vaults with correct
+identification etc. It also unsigns all signatures if for example a presented ID Card with water mark 
+when it is checked on a signature is invalid or expired as well when signatures themselves are cancelled;
+you can modify it to include the standard fields as well as fields in other certificates that will allow
+for you in a pretty similar manner with the XCP Checksume (eXtensible Checksum Process) to generate other
+certificate formats and lengths with easy to modify routines that will in most conditions when the ID
+in it out ranks or is correct rank will divinate other certificate types and locks.
+
+# Installation
+
+Once you have your copy of XOOPS installed copy the folder corresponding in the archive to the correct
+locations and then log into XOOPS go to the module admin and install the module, it is that simple!
+
+# Bug Reports
+
+To report bugs please us http://sourceforge.net/p/chronolabs/tickets remember to report your OS, XOOPS Version
+MySQL Version and PHP Version for the module.
