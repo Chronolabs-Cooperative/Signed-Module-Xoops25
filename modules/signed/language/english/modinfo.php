@@ -37,10 +37,10 @@
 	
 	
 	// Module Definitions
-	define('_SIGNED_MI_MODULE_NAME', 'Signatures Signed');
-	define('_SIGNED_MI_MODULE_VERSION', '2.21');
-	define('_SIGNED_MI_MODULE_DESCRIPTION', 'Final Release');
-	define('_SIGNED_MI_MODULE_AUTHOR', 'Simon Antony Roberts <wishcraft@users.sourceforge.net>');
+	define('_SIGNED_MI_MODULE_NAME', 'Self Signature`s Signed');
+	define('_SIGNED_MI_MODULE_VERSION', '2.22');
+	define('_SIGNED_MI_MODULE_DESCRIPTION', 'Final Major Release');
+	define('_SIGNED_MI_MODULE_AUTHOR', 'Simon Antony Roberts <simon@xcp.solutions>');
 	define('_SIGNED_MI_MODULE_CREDITS', 'Wishcraft');
 	
 	// Module Preferences
