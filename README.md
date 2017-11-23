@@ -1,9 +1,9 @@
 # Digital Signature Sighter Signing module
 ## Scribed for XOOPS 2.5 ~ http://xoops.org - PHP Framework Portal
 ## Author: Simon Antony Roberts (wishcraft)
-### Contact: angle@snails.email (Sydney)
+### Contact: simon@xcp.solutions (Sydney)
 ### Skype: antony.cipher
-### Demo: http://au.syd.snails.email/modules/signed/
+### Demo: http://signed.snails.email
 
 The Digital Signature Sighter Signing module for XOOPS 2.5 is a module that allows your users of 
 your website to have a self signed digital certificate store on your site; the module also has an
